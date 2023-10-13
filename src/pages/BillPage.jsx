@@ -1,4 +1,3 @@
-import React from 'react';
 
 const BillPage = ({ client, invoiceItems }) => {
     console.log(invoiceItems)

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import productMethods from "../services/product.service";
 
 const ClientsPage = () => {
