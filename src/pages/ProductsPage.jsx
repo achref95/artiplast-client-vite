@@ -57,8 +57,8 @@ const ProductsPage = () => {
       const clientName = client
 
       const response = await productMethods.generate({
-        client: clientName,
-        product: productsArray,
+        name: clientName,
+        products: productsArray,
         price: pricesArray,
         quantity: quantitiesArray,
       });
