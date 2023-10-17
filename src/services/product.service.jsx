@@ -66,11 +66,27 @@ const getClients = async () => {
   }
 };
 
+const createProduct = async({ product }) => {
+  try {
+    const token = localStorage.getItem("authToken");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const response = await api.post(`/product`, { product }, config);
+    console.log(response)
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
 const productMethods = {
     generate,
     getInvoices,
     deleteInvoices,
     getClients,
+    createProduct,
 };
 
 export default productMethods;
