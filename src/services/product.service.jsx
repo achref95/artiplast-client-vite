@@ -59,7 +59,7 @@ const getClients = async () => {
       },
     };
     const response = await api.get(`/client/suggestions`, config)
-    console.log(response.data.clients)
+    console.log(response.data)
     return response.data.clients
   } catch (error) {
     console.log(error)
