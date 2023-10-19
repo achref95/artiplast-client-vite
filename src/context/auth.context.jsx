@@ -36,6 +36,7 @@ function AuthProviderWrapper(props) {
         } else {
           setIsLoggedIn(true);
           setIsLoading(false);
+          setExpire(false)
           setUser(userPayload);
         }
       } else {
@@ -68,7 +69,7 @@ function AuthProviderWrapper(props) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, isLoading, user, expire, setUser, storeToken, authenticateUser, logOutUser }}>
+    <AuthContext.Provider value={{ isLoggedIn, isLoading, user, expire, setUser, setExpire, storeToken, authenticateUser, logOutUser }}>
       {props.children}
     </AuthContext.Provider>
   )
