@@ -18,7 +18,7 @@ const HomePage = () => {
             {isLoggedIn ? (
               <>
                 <div className="card-actions">
-                  <Link to="/products"><button className="btn btn-primary">generate invoice</button></Link>
+                  <Link to="/generate"><button className="btn btn-primary">generate invoice</button></Link>
                 </div>
                 <div className="card-actions">
                   <Link to="/invoices"><button className="btn btn-primary">invoices</button></Link>

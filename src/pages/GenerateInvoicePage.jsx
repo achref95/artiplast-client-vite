@@ -2,26 +2,27 @@ import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import productMethods from "../services/product.service";
-import SearchBar from "../components/SearchBar";
+import ClientSearchBar from "../components/ClientSearchBar";
+import ProductSearchBar from "../components/ProductSearchBar";
 import BillPage from "./BillPage";
 
-const ProductsPage = () => {
+const GenerateInvoicePage = () => {
   const [client, setClient] = useState("");
   const [product, setProduct] = useState("");
-  const [price, setPrice] = useState(0);
-  const [quantity, setQuantity] = useState(0);
+  const [price, setPrice] = useState();
+  const [quantity, setQuantity] = useState();
   const [invoiceItems, setInvoiceItems] = useState([]);
   const [bill, setBill] = useState(false);
 
   const { isLoggedIn, isLoading, expire } = useContext(AuthContext);
 
-  const handleClient = (e) => {
-    setClient(e.target.value);
-  }
+  // const handleClient = (e) => {
+  //   setClient(e.target.value);
+  // }
 
-  const handleProduct = (e) => {
-    setProduct(e.target.value);
-  };
+  // const handleProduct = (e) => {
+  //   setProduct(e.target.value);
+  // };
 
   const handlePrice = (e) => {
     setPrice(parseFloat(e.target.value));
@@ -90,26 +91,12 @@ const ProductsPage = () => {
   return (
     isLoggedIn && (
       <div>
-        <SearchBar setClient={setClient}/>
+        
         <form className="flex space-y-2 justify-around">
           <h1>Add</h1>
-          <input
-            type="text"
-            placeholder="Client"
-            className="input input-bordered input-primary w-full max-w-xs"
-            value={client}
-            onChange={handleClient}
-            required
-          />
+          <ClientSearchBar setClient={setClient}/>
           <h1>Add</h1>
-          <input
-            type="text"
-            placeholder="Product"
-            className="input input-bordered input-primary w-full max-w-xs"
-            value={product}
-            onChange={handleProduct}
-            required
-          />
+          <ProductSearchBar setProduct={setProduct} />
           <h1>Add</h1>
           <input
             type="number" 
@@ -182,4 +169,4 @@ const ProductsPage = () => {
   );
 };
 
-export default ProductsPage;
+export default GenerateInvoicePage;

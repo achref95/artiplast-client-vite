@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import productMethods from "../services/product.service";
 
-const SearchBar = ({ setClient }) => {
+const ClientSearchBar = ({ setClient }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -49,6 +49,7 @@ const SearchBar = ({ setClient }) => {
       <input
         type="text"
         placeholder="Search clients..."
+        className="input input-bordered input-primary w-full max-w-xs"
         value={searchTerm}
         onChange={handleInputChange}
       />
@@ -68,6 +69,6 @@ const SearchBar = ({ setClient }) => {
   );
 };
 
-export default SearchBar;
+export default ClientSearchBar;
 
 

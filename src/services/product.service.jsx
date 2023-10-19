@@ -58,7 +58,7 @@ const getClients = async () => {
         Authorization: `Bearer ${token}`,
       },
     };
-    const response = await api.get(`/client/suggestions`, config)
+    const response = await api.get(`/client/get`, config)
     console.log(response.data)
     return response.data.clients
   } catch (error) {
@@ -66,7 +66,7 @@ const getClients = async () => {
   }
 };
 
-const createProduct = async({ product }) => {
+const createProduct = async ({ product }) => {
   try {
     const token = localStorage.getItem("authToken");
     const config = {
@@ -81,12 +81,30 @@ const createProduct = async({ product }) => {
     throw error;
   }
 }
+
+const getProduct = async () => {
+  try {
+    const token = localStorage.getItem("authToken");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const response = await api.get(`/product/get`, config);
+    console.log(response.data)
+    return response.data.products;
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const productMethods = {
     generate,
     getInvoices,
     deleteInvoices,
     getClients,
     createProduct,
+    getProduct,
 };
 
 export default productMethods;
