@@ -8,6 +8,7 @@ import NotFoundPage from "./pages/NotFoundPage"
 import ClientPage from "./pages/ClientPage";
 import BillPage from "./pages/BillPage";
 import AddProductPage from "./pages/AddProductPage";
+import AddClientPage from "./pages/AddClientPage";
 
 function App() {
   return (
@@ -20,7 +21,8 @@ function App() {
         <Route path="/invoices" element={<InvoicesPage />} />
         <Route path="/clients" element={<ClientPage />} />
         <Route path="/bill" element={<BillPage />} />
-        <Route path="/add" element={<AddProductPage />} />
+        <Route path="/add-product" element={<AddProductPage />} />
+        <Route path="/add-client" element={<AddClientPage />} />
         <Route path="/*" element={<NotFoundPage />} />
       </Routes>
     </>
