@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
-import productMethods from "../services/product.service";
 import { AuthContext } from "../context/auth.context";
+import { Link } from "react-router-dom";
+import productMethods from "../services/product.service";
 
 const AddProductPage = () => {
     const { isLoggedIn, isLoading, expire } = useContext(AuthContext);
