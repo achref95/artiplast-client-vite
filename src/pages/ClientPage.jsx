@@ -1,7 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { AuthContext } from "../context/auth.context";
+import { Link } from "react-router-dom";
 import productMethods from "../services/product.service";
 
 const ClientsPage = () => {
+  const { isLoggedIn, /*isLoading*/ expire } = useContext(AuthContext);
+
   const [clients, setClients] = useState([]);
   const [filteredClients, setFilteredClients] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -30,6 +34,11 @@ const ClientsPage = () => {
     );
     setFilteredClients(filteredClients);
   };
+
+  // message appears before pages load, need improvements
+  if (expire || !isLoggedIn) {
+    return <div>Please <Link to="/login"><strong>login</strong></Link> again</div>;
+  }
 
   return (
     <div className="container mx-auto p-4">
