@@ -11,6 +11,16 @@ const ClientsPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
+
+
+  const handleSearch = (searchTerm) => {
+    setSearchTerm(searchTerm);
+    const filteredClients = clients.filter(client =>
+      client.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredClients(filteredClients);
+  };
+
   useEffect(() => {
     // Fetch clients when the component mounts
     const fetchClients = async () => {
@@ -27,16 +37,8 @@ const ClientsPage = () => {
     fetchClients();
   }, []);
 
-  const handleSearch = (searchTerm) => {
-    setSearchTerm(searchTerm);
-    const filteredClients = clients.filter(client =>
-      client.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredClients(filteredClients);
-  };
-
   // message appears before pages load, need improvements
-  if (expire || !isLoggedIn) {
+  if (expire) {
     return <div>Please <Link to="/login"><strong>login</strong></Link> again</div>;
   }
 
