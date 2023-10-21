@@ -8,9 +8,11 @@ import BillPage from "./BillPage";
 
 const GenerateInvoicePage = () => {
   const [client, setClient] = useState("");
+  const [tax, setTax] = useState("");
   const [product, setProduct] = useState("");
-  const [price, setPrice] = useState();
-  const [quantity, setQuantity] = useState();
+  // null can cause an error message but it works
+  const [price, setPrice] = useState(null);
+  const [quantity, setQuantity] = useState(null);
   const [invoiceItems, setInvoiceItems] = useState([]);
   const [bill, setBill] = useState(false);
 
@@ -94,7 +96,7 @@ const GenerateInvoicePage = () => {
         
         <form className="flex space-y-2 justify-around">
           <h1>Add</h1>
-          <ClientSearchBar setClient={setClient}/>
+          <ClientSearchBar setClient={setClient} setTax={setTax}/>
           <h1>Add</h1>
           <ProductSearchBar setProduct={setProduct} />
           <h1>Add</h1>

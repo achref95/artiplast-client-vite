@@ -11,21 +11,12 @@ const ClientsPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
-
-
-  const handleSearch = (searchTerm) => {
-    setSearchTerm(searchTerm);
-    const filteredClients = clients.filter(client =>
-      client.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredClients(filteredClients);
-  };
-
   useEffect(() => {
     // Fetch clients when the component mounts
     const fetchClients = async () => {
       try {
-        const data = await productMethods.getClients();
+        const data = await productMethods.getAllClients();
+        console.log(data)
         setClients(data); // Update the state with the fetched data
         setFilteredClients(data); // Set filteredClients initially to all clients
         setIsLoading(false); // Set loading to false once data is fetched
@@ -37,12 +28,21 @@ const ClientsPage = () => {
     fetchClients();
   }, []);
 
+  const handleSearch = (searchTerm) => {
+    setSearchTerm(searchTerm);
+    const filteredClients = clients.filter(client =>
+      client.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredClients(filteredClients);
+  };
+
   // message appears before pages load, need improvements
   if (expire) {
     return <div>Please <Link to="/login"><strong>login</strong></Link> again</div>;
   }
 
   return (
+    isLoggedIn &&
     <div className="container mx-auto p-4">
       <h1 className="text-4xl font-bold mb-8">Clients</h1>
       <div className="mb-4">

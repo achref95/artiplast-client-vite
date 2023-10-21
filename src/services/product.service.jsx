@@ -50,6 +50,22 @@ const deleteInvoices = async (_id) => {
   }
 }
 
+const getAllClients = async () => {
+  try {
+    const token = localStorage.getItem("authToken");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const response = await api.get(`/client/all`, config)
+    console.log(response.data.clients)
+    return response.data.clients
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const getClients = async () => {
   try {
     const token = localStorage.getItem("authToken");
@@ -60,7 +76,7 @@ const getClients = async () => {
     };
     const response = await api.get(`/client/get`, config)
     console.log(response.data)
-    return response.data.clients
+    return response.data
   } catch (error) {
     console.log(error)
   }
@@ -118,6 +134,7 @@ const productMethods = {
     generate,
     getInvoices,
     deleteInvoices,
+    getAllClients,
     getClients,
     createClient,
     createProduct,
