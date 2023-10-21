@@ -9,6 +9,7 @@ import ClientPage from "./pages/ClientPage";
 import BillPage from "./pages/BillPage";
 import AddProductPage from "./pages/AddProductPage";
 import AddClientPage from "./pages/AddClientPage";
+import ClientDetailPage from "./pages/ClientDetailPage";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/bill" element={<BillPage />} />
         <Route path="/add-product" element={<AddProductPage />} />
         <Route path="/add-client" element={<AddClientPage />} />
+        <Route path="/client/:clientId" element={<ClientDetailPage />} />
         <Route path="/*" element={<NotFoundPage />} />
       </Routes>
     </>

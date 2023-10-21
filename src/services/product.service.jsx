@@ -98,6 +98,22 @@ const createClient = async ({name, taxNumber}) => {
   }
 }
 
+const clientDetail = async (clientId) => {
+  try {
+    const token = localStorage.getItem("authToken");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const response = await api.get(`/client/${clientId}`, config)
+    console.log(response)
+    return response.data.client
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const createProduct = async ({ product }) => {
   try {
     const token = localStorage.getItem("authToken");
@@ -137,6 +153,7 @@ const productMethods = {
     getAllClients,
     getClients,
     createClient,
+    clientDetail,
     createProduct,
     getProduct,
 };
