@@ -7,24 +7,16 @@ import ProductSearchBar from "../components/ProductSearchBar";
 import BillPage from "./BillPage";
 
 const GenerateInvoicePage = () => {
+  const { isLoggedIn, isLoading, expire } = useContext(AuthContext);
+
   const [client, setClient] = useState("");
   const [tax, setTax] = useState("");
   const [product, setProduct] = useState("");
-  // null can cause an error message but it works
   const [price, setPrice] = useState(null);
   const [quantity, setQuantity] = useState(null);
   const [invoiceItems, setInvoiceItems] = useState([]);
   const [bill, setBill] = useState(false);
 
-  const { isLoggedIn, isLoading, expire } = useContext(AuthContext);
-
-  // const handleClient = (e) => {
-  //   setClient(e.target.value);
-  // }
-
-  // const handleProduct = (e) => {
-  //   setProduct(e.target.value);
-  // };
 
   const handlePrice = (e) => {
     setPrice(parseFloat(e.target.value));
@@ -35,7 +27,6 @@ const GenerateInvoicePage = () => {
   };
 
   const handleAddToInvoice = () => {
-    // Add the newly entered product to the invoice items list
     const newItem = { client, product, price, quantity };
     console.log(newItem)
     setInvoiceItems([...invoiceItems, newItem]);
@@ -68,12 +59,12 @@ const GenerateInvoicePage = () => {
   
       console.log(response);
   
-      // setInvoiceItems([]);
       setBill(true)
     } catch (error) {
       console.error(error);
     }
   };
+
 
   if (isLoading) {
     return (
@@ -117,13 +108,15 @@ const GenerateInvoicePage = () => {
             onChange={handleQuantity}
             required
           />
-          <button
-            type="button" // Use type="button" to prevent form submission
-            onClick={handleAddToInvoice}
-            className="btn btn-neutral"
-          >
-            Add to Invoice
-          </button>
+            <button
+              type="button" // Use type="button" to prevent form submission
+              onClick={handleAddToInvoice}
+              className="btn btn-neutral"
+              disabled={!client || !product || price === null || quantity === null}
+              >
+              Add to Invoice
+            </button>
+
         </form>
         
         {invoiceItems.length > 0 && (
