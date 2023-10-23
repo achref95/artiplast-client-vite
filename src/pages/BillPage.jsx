@@ -1,51 +1,64 @@
+import React, { useEffect } from 'react';
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
 
 const BillPage = ({ client, invoiceItems }) => {
-    console.log(invoiceItems)
-  return (
-    <div className="max-w-md mx-auto bg-white p-8 border shadow-lg">
-      <div className="text-center mb-4">
-        <h1 className="text-2xl font-bold">Invoice</h1>
-      </div>
-      <div className="mb-4">
-        <p className="font-semibold">Client Information:</p>
-        <p>{client}</p>
-        <p>Address</p>
-        <p>Email</p>
-      </div>
-      <div className="mb-4">
-        <p className="font-semibold">Invoice Items:</p>
-        <table className="w-full border-collapse">
-          <thead>
-            <tr>
-              <th className="p-2 border">Product</th>
-              <th className="p-2 border">Price</th>
-              <th className="p-2 border">Quantity</th>
-              <th className="p-2 border">Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            {invoiceItems.map((item, index) => (
-              <tr key={index}>
-                <td className="p-2 border">{item.product}</td>
-                <td className="p-2 border">{item.price}</td>
-                <td className="p-2 border">{item.quantity}</td>
-                <td className="p-2 border">{item.price * item.quantity}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <div className="text-right">
-        <p className="font-semibold">Total Amount:</p>
-        <p>
-          {invoiceItems.reduce(
-            (total, item) => total + item.price * item.quantity,
-            0
-          )}
-        </p>
-      </div>
-    </div>
-  );
+  useEffect(() => {
+    const generateInvoice = () => {
+      const doc = new jsPDF();
+      let y = 15; // Initial vertical position on the page
+      const itemHeight = 10; // Height of each item row
+      const pageHeight = 297; // A4 page height in points (1/72 inch)
+
+      doc.setFontSize(18);
+      doc.text('Invoice', 105, y);
+      y += 15;
+
+      doc.setFontSize(12);
+      doc.text(`Client: ${client}`, 15, y);
+      y += 10;
+
+      // Render invoice items as a table
+      doc.autoTable({
+        startY: y,
+        head: [['Product', 'Price', 'Quantity', 'Total']],
+        body: invoiceItems.map((item) => [
+          item.product,
+          `${item.price} USD`,
+          item.quantity,
+          `${item.price * item.quantity} USD`,
+        ]),
+        theme: 'striped',
+        styles: { textColor: [0, 0, 0], fontSize: 10, cellPadding: 2 },
+        columnStyles: { 0: { cellWidth: 80 } }, // Adjust column width if necessary
+        margin: { top: 15 },
+      });
+
+      // Calculate total amount
+      const totalAmount = invoiceItems.reduce(
+        (total, item) => total + item.price * item.quantity,
+        0
+      );
+
+      // Render total amount
+      y = doc.autoTable.previous.finalY + 10;
+      doc.text(`Total Amount: ${totalAmount} USD`, 15, y);
+
+      // Save the PDF or display it, for example:
+      doc.save('invoice.pdf');
+    };
+
+    generateInvoice();
+  }, [client, invoiceItems]);
+
+  return <div>
+    <button
+      onClick={() => window.location.reload()}
+      className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300"
+    >
+      Generate New Invoice
+    </button>
+    </div>; 
 };
 
 export default BillPage;
