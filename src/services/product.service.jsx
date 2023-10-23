@@ -13,7 +13,7 @@ const generate = async ({ name, products, price, quantity}) => {
         },
       };
       const response = await api.post(`/invoice/generate`, { name, products, price, quantity }, config);
-      console.log(response)
+      console.log(response.data)
       return response.data;
     } catch (error) {
       throw error;

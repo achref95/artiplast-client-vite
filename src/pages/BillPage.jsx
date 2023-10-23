@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import logo from '../assets/artiplast-logo.jpeg'
-const BillPage = ({ client, invoiceItems }) => {
+const BillPage = ({ client, invoiceItems, invoiceNumber }) => {
   useEffect(() => {
     const generateInvoice = () => {
       const doc = new jsPDF();
@@ -18,7 +18,7 @@ const BillPage = ({ client, invoiceItems }) => {
       y += 10;
       doc.setFontSize(14);
       doc.text('Sté IDEAL ARTIPLAST', 55, y);
-      
+
       doc.setTextColor(0, 0, 0);
       doc.setFontSize(7);
       y += 4;
@@ -31,7 +31,13 @@ const BillPage = ({ client, invoiceItems }) => {
       doc.text("Fax: 78 560 687", 55, y);
       y += 4;
       doc.text("R.C: B-051432009 - TVA: 000/MA/1079207/Z", 55, y);
+
+      doc.setTextColor(51, 159, 255);
+      y += 10;
+      doc.setFontSize(14);
+      doc.text(`${invoiceNumber}`, 55, y);
       
+      doc.setTextColor(0, 0, 0);
       y += 20; // Move down after adding logo and company details
 
       doc.setFontSize(18);

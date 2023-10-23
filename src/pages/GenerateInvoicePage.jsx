@@ -14,6 +14,7 @@ const GenerateInvoicePage = () => {
   const [product, setProduct] = useState("");
   const [price, setPrice] = useState(null);
   const [quantity, setQuantity] = useState(null);
+  const [invoiceNumber, setInvoiceNumber] = useState("");
   const [invoiceItems, setInvoiceItems] = useState([]);
   const [bill, setBill] = useState(false);
 
@@ -32,8 +33,8 @@ const GenerateInvoicePage = () => {
     setInvoiceItems([...invoiceItems, newItem]);
 
     setProduct("");
-    setPrice(0);
-    setQuantity(0);
+    setPrice(null);
+    setQuantity(null);
     setBill(false);
   };
 
@@ -57,8 +58,9 @@ const GenerateInvoicePage = () => {
         quantity: quantitiesArray,
       });
   
-      console.log(response);
-  
+      console.log(response.invoiceNumber);
+
+      setInvoiceNumber(response.invoiceNumber)
       setBill(true)
     } catch (error) {
       console.error(error);
@@ -158,7 +160,7 @@ const GenerateInvoicePage = () => {
             </button>
           </div>
         )}
-        {bill && <BillPage client={client} invoiceItems={invoiceItems} />}
+        {bill && <BillPage client={client} invoiceItems={invoiceItems} invoiceNumber={invoiceNumber} />}
       </div>
     )
   );
