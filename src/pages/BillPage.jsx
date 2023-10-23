@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
-
+import logo from '../assets/artiplast-logo.jpeg'
 const BillPage = ({ client, invoiceItems }) => {
   useEffect(() => {
     const generateInvoice = () => {
@@ -9,6 +9,30 @@ const BillPage = ({ client, invoiceItems }) => {
       let y = 15; // Initial vertical position on the page
       const itemHeight = 10; // Height of each item row
       const pageHeight = 297; // A4 page height in points (1/72 inch)
+
+      // Add company logo
+      doc.addImage(logo, 'JPEG', 15, y, 30, 30); // (image, format, x, y, width, height)
+
+      // Add company name and details
+      doc.setTextColor(51, 159, 255);
+      y += 10;
+      doc.setFontSize(14);
+      doc.text('Sté IDEAL ARTIPLAST', 55, y);
+      
+      doc.setTextColor(0, 0, 0);
+      doc.setFontSize(7);
+      y += 4;
+      doc.text('vente en Gros des Articles el Plastique', 55, y);
+      y += 4;
+      doc.text("Av. de l'Environnement - Medjez El Bab", 55, y);
+      y += 4;
+      doc.text("Tél: 78 560 687 - GSM 98 779 826", 55, y);
+      y += 4;
+      doc.text("Fax: 78 560 687", 55, y);
+      y += 4;
+      doc.text("R.C: B-051432009 - TVA: 000/MA/1079207/Z", 55, y);
+      
+      y += 20; // Move down after adding logo and company details
 
       doc.setFontSize(18);
       doc.text('Invoice', 105, y);
@@ -51,15 +75,16 @@ const BillPage = ({ client, invoiceItems }) => {
     generateInvoice();
   }, [client, invoiceItems]);
 
-  return <div>
-    <button
-      onClick={() => window.location.reload()}
-      className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300"
-    >
-      Generate New Invoice
-    </button>
-    </div>; 
+  return (
+    <div className="flex justify-center mt-2">
+      <button
+        onClick={() => window.location.reload()}
+        className="btn"
+      >
+        Generate New Invoice
+      </button>
+    </div>
+  );
 };
 
 export default BillPage;
-
