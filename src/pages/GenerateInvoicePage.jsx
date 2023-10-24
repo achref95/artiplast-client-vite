@@ -18,7 +18,6 @@ const GenerateInvoicePage = () => {
   const [invoiceItems, setInvoiceItems] = useState([]);
   const [bill, setBill] = useState(false);
 
-
   const handlePrice = (e) => {
     setPrice(parseFloat(e.target.value));
   };

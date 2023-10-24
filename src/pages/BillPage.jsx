@@ -43,6 +43,9 @@ const BillPage = ({ client, invoiceItems, invoiceNumber, tax }) => {
       ////////////////////////////////////
       // Client details
       doc.setFontSize(9);
+      const maxClientNameWidth = 50; // Set a maximum width for the client name
+      const splitText = doc.splitTextToSize(client, maxClientNameWidth);
+      const wrappedClient = splitText.join("\n");
       const roundedRectX = 120; 
       const roundedRectY = y - 12; 
       const roundedRectWidth = 50;
@@ -51,15 +54,16 @@ const BillPage = ({ client, invoiceItems, invoiceNumber, tax }) => {
       doc.setDrawColor(0);
       doc.roundedRect(roundedRectX, roundedRectY, roundedRectWidth, roundedRectHeight, cornerRadius, cornerRadius, 'S');
 
-      // Add text inside the rounded rectangle
+      // Add text inside the rounded rectangle with text wrapping
       doc.setFont("times", "normal");
       doc.setTextColor(0, 0, 0);
-      doc.text(`${client}`, 125, roundedRectY + 5);
-      doc.text(`${tax}`, 135, roundedRectY + 11)
+      doc.text(wrappedClient, 125, roundedRectY + 5);
+      doc.text(`${tax}`, 135, roundedRectY + 11);
       const currentDate = new Date();
       const formattedDate = `${String(currentDate.getDate()).padStart(2, '0')}/${String(currentDate.getMonth() + 1).padStart(2, '0')}/${currentDate.getFullYear()}`;
-      
+
       doc.text(`Medjez le ${formattedDate}`, 133, roundedRectY + 20);
+
       //////////////////////////////////////
 
       // Set font style back to normal
@@ -99,12 +103,20 @@ const BillPage = ({ client, invoiceItems, invoiceNumber, tax }) => {
       y = doc.autoTable.previous.finalY + 10;
       doc.text(`Total Amount: ${totalAmount} USD`, 15, y);
 
+        // Draw the line at the bottom of the page with specified blue color
+        const lineY = doc.internal.pageSize.height - 70; // 7 cm from the bottom
+        const lineStartX = 15; // 1 cm from the left
+        const lineEndX = doc.internal.pageSize.width - 15; // 1 cm from the right
+        doc.setLineWidth(0.5);
+        doc.setDrawColor(51, 159, 255); // Set line color to blue
+        doc.line(lineStartX, lineY, lineEndX, lineY);
+
       // Save the PDF or display it, for example:
       doc.save('invoice.pdf');
     };
 
     generateInvoice();
-  }, [client, invoiceItems]);
+  }, []);
 
   return (
     <div className="flex justify-center mt-2">
