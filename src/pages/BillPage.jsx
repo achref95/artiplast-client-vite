@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import logo from '../assets/artiplast-logo.jpeg'
-const BillPage = ({ client, invoiceItems, invoiceNumber }) => {
+const BillPage = ({ client, invoiceItems, invoiceNumber, tax }) => {
   useEffect(() => {
     const generateInvoice = () => {
       const doc = new jsPDF();
@@ -10,15 +10,16 @@ const BillPage = ({ client, invoiceItems, invoiceNumber }) => {
       const itemHeight = 10; // Height of each item row
       const pageHeight = 297; // A4 page height in points (1/72 inch)
 
-      // Add company logo
+      // Company logo
       doc.addImage(logo, 'JPEG', 15, y, 30, 30); // (image, format, x, y, width, height)
 
-      // Add company name and details
+      // Company name
       doc.setTextColor(51, 159, 255);
       y += 10;
       doc.setFontSize(14);
       doc.text('Sté IDEAL ARTIPLAST', 55, y);
 
+      // Company details
       doc.setTextColor(0, 0, 0);
       doc.setFontSize(7);
       y += 4;
@@ -26,23 +27,47 @@ const BillPage = ({ client, invoiceItems, invoiceNumber }) => {
       y += 4;
       doc.text("Av. de l'Environnement - Medjez El Bab", 55, y);
       y += 4;
-      doc.text("Tél: 78 560 687 - GSM 98 779 826", 55, y);
+      doc.text("Tél: 78 560 234 - GSM 98 779 826", 55, y);
       y += 4;
       doc.text("Fax: 78 560 687", 55, y);
       y += 4;
       doc.text("R.C: B-051432009 - TVA: 000/MA/1079207/Z", 55, y);
 
+      // Invoice number
       doc.setTextColor(51, 159, 255);
-      y += 10;
+      y += 16;
       doc.setFontSize(14);
-      doc.text(`${invoiceNumber}`, 55, y);
+      doc.setFont('times', 'bold');
+      doc.text(`${invoiceNumber}`, 50, y);
+
+      ////////////////////////////////////
+      // Client details
+      doc.setFontSize(9);
+      const roundedRectX = 120; 
+      const roundedRectY = y - 12; 
+      const roundedRectWidth = 50;
+      const roundedRectHeight = 25; 
+      const cornerRadius = 3; 
+      doc.setDrawColor(0);
+      doc.roundedRect(roundedRectX, roundedRectY, roundedRectWidth, roundedRectHeight, cornerRadius, cornerRadius, 'S');
+
+      // Add text inside the rounded rectangle
+      doc.setFont("times", "normal");
+      doc.setTextColor(0, 0, 0);
+      doc.text(`${client}`, 125, roundedRectY + 5);
+      doc.text(`${tax}`, 135, roundedRectY + 11)
+      const currentDate = new Date();
+      const formattedDate = `${String(currentDate.getDate()).padStart(2, '0')}/${String(currentDate.getMonth() + 1).padStart(2, '0')}/${currentDate.getFullYear()}`;
       
+      doc.text(`Medjez le ${formattedDate}`, 133, roundedRectY + 20);
+      //////////////////////////////////////
+
+      // Set font style back to normal
+      doc.setFont("normal"); 
+      doc.setFontSize(14);
       doc.setTextColor(0, 0, 0);
       y += 20; // Move down after adding logo and company details
 
-      doc.setFontSize(18);
-      doc.text('Invoice', 105, y);
-      y += 15;
 
       doc.setFontSize(12);
       doc.text(`Client: ${client}`, 15, y);

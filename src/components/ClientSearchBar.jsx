@@ -36,6 +36,9 @@ const ClientSearchBar = ({ setClient, setTax }) => {
     setSelectedClient(client);
     setClient(client.name); // Set the selected client name in your main component state
     setTax(client.taxNumber); // Set the tax number in your main component state
+    if (!client.taxNumber) {
+      setTax("___________")
+    }
     setSearchTerm(client.name); // Set the search term to the selected client name
     setShowSuggestions(false); // Hide suggestions after clicking
   };

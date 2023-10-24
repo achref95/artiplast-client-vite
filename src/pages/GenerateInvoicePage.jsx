@@ -160,7 +160,7 @@ const GenerateInvoicePage = () => {
             </button>
           </div>
         )}
-        {bill && <BillPage client={client} invoiceItems={invoiceItems} invoiceNumber={invoiceNumber} />}
+        {bill && <BillPage client={client} invoiceItems={invoiceItems} invoiceNumber={invoiceNumber} tax={tax} />}
       </div>
     )
   );
