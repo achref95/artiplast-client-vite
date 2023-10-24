@@ -38,7 +38,7 @@ const BillPage = ({ client, invoiceItems, invoiceNumber, tax }) => {
       y += 16;
       doc.setFontSize(14);
       doc.setFont('times', 'bold');
-      doc.text(`${invoiceNumber}`, 50, y);
+      doc.text(`Facture N° ${invoiceNumber}`, 50, y);
 
       ////////////////////////////////////
       // Client details
