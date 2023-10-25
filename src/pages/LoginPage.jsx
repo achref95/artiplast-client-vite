@@ -27,7 +27,6 @@ const LoginPage = () => {
       username: username,
       password: password,
     };
-    console.log(user)
 
     setIsLoadingLogin(true);
 
