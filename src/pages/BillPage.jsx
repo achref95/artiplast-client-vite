@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import logo from '../assets/artiplast-logo.jpeg'
-const BillPage = ({ client, invoiceItems, invoiceNumber, tax }) => {
+const BillPage = ({ client, invoiceItems, invoiceNumber, tax, totalAmount }) => {
   useEffect(() => {
     const generateInvoice = () => {
       const doc = new jsPDF();

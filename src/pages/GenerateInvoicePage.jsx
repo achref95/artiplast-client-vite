@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
+import { calculateTotalWithTVA } from "../components/invoiceUtils";
 import productMethods from "../services/product.service";
 import ClientSearchBar from "../components/ClientSearchBar";
 import ProductSearchBar from "../components/ProductSearchBar";
@@ -12,11 +13,11 @@ const GenerateInvoicePage = () => {
   const [client, setClient] = useState("");
   const [tax, setTax] = useState("");
   const [product, setProduct] = useState("");
-  const [price, setPrice] = useState(null);
-  const [quantity, setQuantity] = useState(null);
-  const [discount, setDiscount] = useState(null);
+  const [price, setPrice] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [discount, setDiscount] = useState("");
   const [tva, setTVA] = useState(19);
-  const [totalAmount, setTotalAmount] = useState(null);
+  const [totalAmount, setTotalAmount] = useState(0);
   const [invoiceNumber, setInvoiceNumber] = useState("");
   const [invoiceItems, setInvoiceItems] = useState([]);
   const [bill, setBill] = useState(false);
@@ -46,16 +47,16 @@ const GenerateInvoicePage = () => {
     const newItem = { client, product, price, quantity, discount, tva };
     console.log(newItem)
 
-    const totalWithoutTVA = (price - discount) * quantity
-    const tvaAmount = ((price - discount) * quantity) * (tva / 100)
-    const totalWithTVA = totalWithoutTVA + tvaAmount
-    console.log("total:", totalWithTVA)
+    // const totalWithoutTVA = (price - discount) * quantity
+    // const tvaAmount = ((price - discount) * quantity) * (tva / 100)
+    // const totalWithTVA = totalWithoutTVA + tvaAmount
+    // console.log("total:", totalWithTVA)
 
     setInvoiceItems([...invoiceItems, newItem]);
     setProduct("");
-    setPrice(null);
-    setQuantity(null);
-    setDiscount(null);
+    setPrice("");
+    setQuantity("");
+    setDiscount("");
     setTVA(19);
     setBill(false);
   };
@@ -75,6 +76,10 @@ const GenerateInvoicePage = () => {
       const tvasArray = invoiceItems.map((item) => item.tva)
       const clientName = client
 
+      const totalAmountWithTVA = calculateTotalWithTVA(invoiceItems);
+      console.log("total:", totalAmountWithTVA)
+
+
       const response = await productMethods.generate({
         name: clientName,
         products: productsArray,
@@ -84,8 +89,7 @@ const GenerateInvoicePage = () => {
         tva: tvasArray,
       });
   
-      console.log(response.invoiceNumber);
-
+      setTotalAmount(totalAmountWithTVA)
       setInvoiceNumber(response.invoiceNumber)
       setBill(true)
     } catch (error) {
@@ -208,7 +212,7 @@ const GenerateInvoicePage = () => {
             </button>
           </div>
         )}
-        {bill && <BillPage client={client} invoiceItems={invoiceItems} invoiceNumber={invoiceNumber} tax={tax} />}
+        {bill && <BillPage client={client} invoiceItems={invoiceItems} invoiceNumber={invoiceNumber} tax={tax} totalAmount={totalAmount} />}
       </div>
     )
   );
