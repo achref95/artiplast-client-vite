@@ -14,6 +14,9 @@ const GenerateInvoicePage = () => {
   const [product, setProduct] = useState("");
   const [price, setPrice] = useState(null);
   const [quantity, setQuantity] = useState(null);
+  const [discount, setDiscount] = useState(null);
+  const [tva, setTVA] = useState(19);
+  const [totalAmount, setTotalAmount] = useState(null);
   const [invoiceNumber, setInvoiceNumber] = useState("");
   const [invoiceItems, setInvoiceItems] = useState([]);
   const [bill, setBill] = useState(false);
@@ -25,6 +28,10 @@ const GenerateInvoicePage = () => {
   const handleQuantity = (e) => {
     setQuantity(parseInt(e.target.value, 10));
   };
+
+  const handleTVA =(e) => {
+    setTVA(parseInt(e.target.value));
+  }
 
   const handleAddToInvoice = () => {
     const newItem = { client, product, price, quantity };
@@ -109,11 +116,20 @@ const GenerateInvoicePage = () => {
             onChange={handleQuantity}
             required
           />
+          <h1>Add</h1>
+          <input
+            type="number" 
+            placeholder="TVA %"
+            className="input input-bordered input-primary w-full max-w-xs"
+            value={tva}
+            onChange={handleTVA}
+            required
+          />
             <button
               type="button" // Use type="button" to prevent form submission
               onClick={handleAddToInvoice}
               className="btn btn-neutral"
-              disabled={!client || !product || price === null || quantity === null}
+              // disabled={!client || !product || price === null || quantity === null}
               >
               Add to Invoice
             </button>

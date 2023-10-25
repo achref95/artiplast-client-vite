@@ -8,7 +8,8 @@ const BillPage = ({ client, invoiceItems, invoiceNumber, tax }) => {
       const doc = new jsPDF();
       let y = 15; // Initial vertical position on the page
       const itemHeight = 10; // Height of each item row
-      const pageHeight = 297; // A4 page height in points (1/72 inch)
+      const lineY = doc.internal.pageSize.height - 70; // 7 cm from the bottom
+      const maxItemsOnFirstPage = Math.floor((lineY - y) / itemHeight); // Maximum items that can fit on the first page
 
       // Company logo
       doc.addImage(logo, 'JPEG', 15, y, 30, 30); // (image, format, x, y, width, height)
@@ -78,38 +79,38 @@ const BillPage = ({ client, invoiceItems, invoiceNumber, tax }) => {
       y += 10;
 
       // Render invoice items as a table
-      doc.autoTable({
-        startY: y,
-        head: [['Product', 'Price', 'Quantity', 'Total']],
-        body: invoiceItems.map((item) => [
-          item.product,
-          `${item.price} USD`,
-          item.quantity,
-          `${item.price * item.quantity} USD`,
-        ]),
-        theme: 'striped',
-        styles: { textColor: [0, 0, 0], fontSize: 10, cellPadding: 2 },
-        columnStyles: { 0: { cellWidth: 80 } }, // Adjust column width if necessary
-        margin: { top: 15 },
-      });
+      let itemsRendered = 0;
+      while (itemsRendered < invoiceItems.length) {
+        const itemsToRender = invoiceItems.slice(itemsRendered, itemsRendered + maxItemsOnFirstPage);
+        doc.autoTable({
+          startY: y,
+          head: [['Product', 'Price', 'Quantity', 'Total']],
+          body: itemsToRender.map((item) => [
+            item.product,
+            `${item.price} USD`,
+            item.quantity,
+            `${item.price * item.quantity} USD`,
+          ]),
+          theme: 'striped',
+          styles: { textColor: [0, 0, 0], fontSize: 10, cellPadding: 2 },
+          columnStyles: { 0: { cellWidth: 80 } }, // Adjust column width if necessary
+          margin: { top: 15 },
+        });
+        itemsRendered += itemsToRender.length;
+        y = doc.autoTable.previous.finalY + 10;
 
-      // Calculate total amount
-      const totalAmount = invoiceItems.reduce(
-        (total, item) => total + item.price * item.quantity,
-        0
-      );
+        if (itemsRendered < invoiceItems.length) {
+          doc.addPage(); // Add a new page if there are more items to render
+          y = 15; // Reset vertical position for the new page
+        }
+      }
 
-      // Render total amount
-      y = doc.autoTable.previous.finalY + 10;
-      doc.text(`Total Amount: ${totalAmount} USD`, 15, y);
-
-        // Draw the line at the bottom of the page with specified blue color
-        const lineY = doc.internal.pageSize.height - 70; // 7 cm from the bottom
-        const lineStartX = 15; // 1 cm from the left
-        const lineEndX = doc.internal.pageSize.width - 15; // 1 cm from the right
-        doc.setLineWidth(0.5);
-        doc.setDrawColor(51, 159, 255); // Set line color to blue
-        doc.line(lineStartX, lineY, lineEndX, lineY);
+      // Draw the line at the bottom of the last page with specified blue color
+      const lineStartX = 15; // 1 cm from the left
+      const lineEndX = doc.internal.pageSize.width - 15; // 1 cm from the right
+      doc.setLineWidth(0.5);
+      doc.setDrawColor(51, 159, 255); // Set line color to blue
+      doc.line(lineStartX, lineY, lineEndX, lineY);
 
       // Save the PDF or display it, for example:
       doc.save('invoice.pdf');
