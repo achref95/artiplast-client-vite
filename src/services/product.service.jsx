@@ -4,7 +4,7 @@ const api = axios.create({
   baseURL: import.meta.env.VITE_APP_API_URL
 });
 
-const generate = async ({ name, products, price, quantity}) => {
+const generate = async ({ name, products, price, quantity, discount, tva}) => {
     try {
       const token = localStorage.getItem("authToken");
       const config = {
@@ -12,7 +12,7 @@ const generate = async ({ name, products, price, quantity}) => {
           Authorization: `Bearer ${token}`,
         },
       };
-      const response = await api.post(`/invoice/generate`, { name, products, price, quantity }, config);
+      const response = await api.post(`/invoice/generate`, { name, products, price, quantity, discount, tva }, config);
       console.log(response.data)
       return response.data;
     } catch (error) {

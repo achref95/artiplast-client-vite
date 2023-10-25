@@ -29,18 +29,34 @@ const GenerateInvoicePage = () => {
     setQuantity(parseInt(e.target.value, 10));
   };
 
-  const handleTVA =(e) => {
-    setTVA(parseInt(e.target.value));
-  }
+  const handleDiscount = (e) => {
+    const discountInputValue = parseInt(e.target.value);
+    const discountValue = isNaN(discountInputValue) ? 0 : discountInputValue;
+    setDiscount(discountValue);
+  };
+
+  const handleTVA = (e) => {
+    const tvaInputValue = parseInt(e.target.value);
+    const tvaValue = isNaN(tvaInputValue) ? 0 : tvaInputValue;
+    setTVA(tvaValue);
+  };
+  
 
   const handleAddToInvoice = () => {
-    const newItem = { client, product, price, quantity };
+    const newItem = { client, product, price, quantity, discount, tva };
     console.log(newItem)
-    setInvoiceItems([...invoiceItems, newItem]);
 
+    const totalWithoutTVA = (price - discount) * quantity
+    const tvaAmount = ((price - discount) * quantity) * (tva / 100)
+    const totalWithTVA = totalWithoutTVA + tvaAmount
+    console.log("total:", totalWithTVA)
+
+    setInvoiceItems([...invoiceItems, newItem]);
     setProduct("");
     setPrice(null);
     setQuantity(null);
+    setDiscount(null);
+    setTVA(19);
     setBill(false);
   };
 
@@ -55,6 +71,8 @@ const GenerateInvoicePage = () => {
       const productsArray = invoiceItems.map((item) => item.product);
       const pricesArray = invoiceItems.map((item) => item.price);
       const quantitiesArray = invoiceItems.map((item) => item.quantity);
+      const discountsArray = invoiceItems.map((item) => item.discount);
+      const tvasArray = invoiceItems.map((item) => item.tva)
       const clientName = client
 
       const response = await productMethods.generate({
@@ -62,6 +80,8 @@ const GenerateInvoicePage = () => {
         products: productsArray,
         price: pricesArray,
         quantity: quantitiesArray,
+        discount: discountsArray,
+        tva: tvasArray,
       });
   
       console.log(response.invoiceNumber);
@@ -119,6 +139,15 @@ const GenerateInvoicePage = () => {
           <h1>Add</h1>
           <input
             type="number" 
+            placeholder="Discount"
+            className="input input-bordered input-primary w-full max-w-xs"
+            value={discount}
+            onChange={handleDiscount}
+            required
+          />
+          <h1>Add</h1>
+          <input
+            type="number" 
             placeholder="TVA %"
             className="input input-bordered input-primary w-full max-w-xs"
             value={tva}
@@ -146,6 +175,8 @@ const GenerateInvoicePage = () => {
                   <th>Product</th>
                   <th>Price</th>
                   <th>Quantity</th>
+                  <th>Discount</th>
+                  <th>TVA</th>
                 </tr>
               </thead>
               <tbody>
@@ -154,6 +185,8 @@ const GenerateInvoicePage = () => {
                     <td>{item.product}</td>
                     <td>{item.price}</td>
                     <td>{item.quantity}</td>
+                    <td>{item.discount || 0}</td>
+                    <td>{`${item.tva}%` || 0}</td>
                     <td>
                       <button 
                         className="btn btn-primary"
