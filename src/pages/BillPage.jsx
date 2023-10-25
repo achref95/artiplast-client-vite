@@ -2,7 +2,13 @@ import React, { useEffect } from 'react';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import logo from '../assets/artiplast-logo.jpeg'
-const BillPage = ({ client, invoiceItems, invoiceNumber, tax, totalAmount }) => {
+const BillPage = ({ client,
+                    invoiceItems, 
+                    invoiceNumber, 
+                    tax, 
+                    totalAmount, 
+                    withoutTVA, 
+                    invoiceTVA}) => {
   useEffect(() => {
     const generateInvoice = () => {
       const doc = new jsPDF();
@@ -87,9 +93,9 @@ const BillPage = ({ client, invoiceItems, invoiceNumber, tax, totalAmount }) => 
           head: [['Product', 'Price', 'Quantity', 'Total']],
           body: itemsToRender.map((item) => [
             item.product,
-            `${item.price} USD`,
+            `${item.price} TND`,
             item.quantity,
-            `${item.price * item.quantity} USD`,
+            `${item.price * item.quantity} TND`,
           ]),
           theme: 'striped',
           styles: { textColor: [0, 0, 0], fontSize: 10, cellPadding: 2 },
@@ -111,6 +117,11 @@ const BillPage = ({ client, invoiceItems, invoiceNumber, tax, totalAmount }) => 
       doc.setLineWidth(0.5);
       doc.setDrawColor(51, 159, 255); // Set line color to blue
       doc.line(lineStartX, lineY, lineEndX, lineY);
+            // Draw total amount under the line on the right side
+            const totalAmountText = `Total TTC: ${totalAmount} TND`;
+            const totalAmountWidth = doc.getStringUnitWidth(totalAmountText) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+            const totalAmountX = doc.internal.pageSize.width - 15 - totalAmountWidth;
+            doc.text(totalAmountText, totalAmountX, lineY + 5);
 
       // Save the PDF or display it, for example:
       doc.save('invoice.pdf');
