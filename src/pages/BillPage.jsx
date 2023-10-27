@@ -4,11 +4,12 @@ import 'jspdf-autotable';
 import logo from '../assets/artiplast-logo.jpeg'
 const BillPage = ({ client,
                     invoiceItems, 
-                    invoiceNumber, 
-                    tax, 
-                    totalAmount, 
-                    withoutTVA, 
-                    invoiceTVA}) => {
+                    invoiceNumber,
+                    tva /*Taux%*/, 
+                    tax /*Matricule fiscal*/, 
+                    totalAmount/*Total TTC*/, 
+                    withoutTVA /*Base/Total HT*/, 
+                    invoiceTVA /*Montant/TVA*/}) => {
   useEffect(() => {
     const generateInvoice = () => {
       const doc = new jsPDF();
@@ -80,11 +81,6 @@ const BillPage = ({ client,
       doc.setTextColor(0, 0, 0);
       y += 20; // Move down after adding logo and company details
 
-
-      doc.setFontSize(12);
-      doc.text(`Client: ${client}`, 15, y);
-      y += 10;
-
       // Render invoice items as a table
       let itemsRendered = 0;
       while (itemsRendered < invoiceItems.length) {
@@ -114,8 +110,8 @@ const BillPage = ({ client,
       /////////////////////////////////////////////////////////////////////////////////
 
       // Draw the line at the bottom of the last page with specified blue color
-      const lineStartX = 15; // 1 cm from the left
-      const lineEndX = doc.internal.pageSize.width - 15; // 1 cm from the right
+      const lineStartX = 10; // 1 cm from the left
+      const lineEndX = doc.internal.pageSize.width - 10; // 1 cm from the right
       doc.setLineWidth(0.5);
       doc.setDrawColor(51, 159, 255); // Set line color to blue
       doc.line(lineStartX, lineY, lineEndX, lineY);
@@ -123,7 +119,7 @@ const BillPage = ({ client,
         // 1st line words
       const words1 = ['Code', 'Base', 'Taux', 'Montant'];
       const word1X = 20; // 1.5 cm from the left
-      const words1Spacing = 15; // 1 cm between each word
+      const words1Spacing = 18; // 1 cm between each word
       doc.setTextColor(51, 159, 255); // Set text color to blue
       doc.setFontSize(10);
       words1.forEach((word, index) => {
@@ -143,25 +139,44 @@ const BillPage = ({ client,
 
       // Second line part 1
       const line2Part1StartX = 15; // 1 cm from the left
-      const line2Part1EndX = 80;//doc.internal.pageSize.width - 15; // 1 cm from the right
+      const line2Part1EndX = 88;//doc.internal.pageSize.width - 15; // 1 cm from the right
       doc.setLineWidth(0.5);
       doc.setDrawColor(51, 159, 255); // Set line color to blue
       doc.line(line2Part1StartX, lineY2, line2Part1EndX, lineY2);
       // Second line part 2
-      const line2Part2StartX = 100; // 1 cm from the left
+      const line2Part2StartX = 108; // 1 cm from the left
       const line2Part2EndX = doc.internal.pageSize.width - 18;
       doc.setLineWidth(0.5);
       doc.setDrawColor(51, 159, 255); // Set line color to blue
       doc.line(line2Part2StartX, lineY2, line2Part2EndX, lineY2);
 
+      // Total TTC
+      const totalAmountText = `${totalAmount} TND`;
+      // const totalAmountWidth = doc.getStringUnitWidth(totalAmountText) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+      // const totalAmountX = doc.internal.pageSize.width - 20 - totalAmountWidth;
+      // doc.text(totalAmountText, totalAmountX, lineY + 15);
 
+      // line 2
+      const line2Part1 = ['TVA Col', withoutTVA.toString(), `${tva} %`, invoiceTVA.toString()];
+      const detail1X = 20; // 1.5 cm from the left
+      const detail1Spacing = 18; // 1 cm between each word
+      doc.setTextColor(0); // Set text color to blue
+      doc.setFontSize(10);
+      line2Part1.forEach((detail, index) => {
+        const x = detail1X + index * detail1Spacing;
+        doc.text(detail, x, lineY + 15);
+      });
 
-            // // Draw total amount under the line on the right side
-            // const totalAmountText = `Total TTC: ${totalAmount} TND`;
-            // const totalAmountWidth = doc.getStringUnitWidth(totalAmountText) * doc.internal.getFontSize() / doc.internal.scaleFactor;
-            // const totalAmountX = doc.internal.pageSize.width - 15 - totalAmountWidth;
-            // doc.text(totalAmountText, totalAmountX, lineY + 5);
-      
+      const line2Part2 = [withoutTVA.toString(), invoiceTVA.toString(), '1000', totalAmountText];
+      const detail2X = 110; // 1.5 cm from the left
+      const detail2Spacing = 20; // 1 cm between each word
+      doc.setTextColor(0); // Set text color to blue
+      doc.setFontSize(10);
+      line2Part2.forEach((detail, index) => {
+        const x = detail2X + index * detail2Spacing;
+        doc.text(detail, x, lineY + 15);
+      });
+       
 
 
       /////////////////////////////////////////////////////////////////////////////////

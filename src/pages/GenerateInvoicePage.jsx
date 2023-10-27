@@ -221,7 +221,8 @@ const GenerateInvoicePage = () => {
         {bill && <BillPage 
                     client={client} 
                     invoiceItems={invoiceItems} 
-                    invoiceNumber={invoiceNumber} 
+                    invoiceNumber={invoiceNumber}
+                    tva={tva} 
                     tax={tax} totalAmount={totalAmount} 
                     withoutTVA={withoutTVA} 
                     invoiceTVA={invoiceTVA} 
