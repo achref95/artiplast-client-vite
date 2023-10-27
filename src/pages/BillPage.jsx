@@ -15,6 +15,7 @@ const BillPage = ({ client,
       let y = 15; // Initial vertical position on the page
       const itemHeight = 10; // Height of each item row
       const lineY = doc.internal.pageSize.height - 70; // 7 cm from the bottom
+      const lineY2 = doc.internal.pageSize.height - 60;
       const maxItemsOnFirstPage = Math.floor((lineY - y) / itemHeight); // Maximum items that can fit on the first page
 
       // Company logo
@@ -110,6 +111,7 @@ const BillPage = ({ client,
           y = 15; // Reset vertical position for the new page
         }
       }
+      /////////////////////////////////////////////////////////////////////////////////
 
       // Draw the line at the bottom of the last page with specified blue color
       const lineStartX = 15; // 1 cm from the left
@@ -117,11 +119,52 @@ const BillPage = ({ client,
       doc.setLineWidth(0.5);
       doc.setDrawColor(51, 159, 255); // Set line color to blue
       doc.line(lineStartX, lineY, lineEndX, lineY);
-            // Draw total amount under the line on the right side
-            const totalAmountText = `Total TTC: ${totalAmount} TND`;
-            const totalAmountWidth = doc.getStringUnitWidth(totalAmountText) * doc.internal.getFontSize() / doc.internal.scaleFactor;
-            const totalAmountX = doc.internal.pageSize.width - 15 - totalAmountWidth;
-            doc.text(totalAmountText, totalAmountX, lineY + 5);
+
+        // 1st line words
+      const words1 = ['Code', 'Base', 'Taux', 'Montant'];
+      const word1X = 20; // 1.5 cm from the left
+      const words1Spacing = 15; // 1 cm between each word
+      doc.setTextColor(51, 159, 255); // Set text color to blue
+      doc.setFontSize(10);
+      words1.forEach((word, index) => {
+        const x = word1X + index * words1Spacing;
+        doc.text(word, x, lineY + 7);
+      });
+
+      const words2 = ['Total HT', 'TVA', 'Timbre', 'Total TTC'];
+      const word2X = 110;
+      const words2Spacing = 20;
+      doc.setTextColor(0); // Set text color to blue
+      doc.setFontSize(10);
+      words2.forEach((word, index) => {
+        const x = word2X + index * words2Spacing;
+        doc.text(word, x, lineY + 7);
+      });
+
+      // Second line part 1
+      const line2Part1StartX = 15; // 1 cm from the left
+      const line2Part1EndX = 80;//doc.internal.pageSize.width - 15; // 1 cm from the right
+      doc.setLineWidth(0.5);
+      doc.setDrawColor(51, 159, 255); // Set line color to blue
+      doc.line(line2Part1StartX, lineY2, line2Part1EndX, lineY2);
+      // Second line part 2
+      const line2Part2StartX = 100; // 1 cm from the left
+      const line2Part2EndX = doc.internal.pageSize.width - 18;
+      doc.setLineWidth(0.5);
+      doc.setDrawColor(51, 159, 255); // Set line color to blue
+      doc.line(line2Part2StartX, lineY2, line2Part2EndX, lineY2);
+
+
+
+            // // Draw total amount under the line on the right side
+            // const totalAmountText = `Total TTC: ${totalAmount} TND`;
+            // const totalAmountWidth = doc.getStringUnitWidth(totalAmountText) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+            // const totalAmountX = doc.internal.pageSize.width - 15 - totalAmountWidth;
+            // doc.text(totalAmountText, totalAmountX, lineY + 5);
+      
+
+
+      /////////////////////////////////////////////////////////////////////////////////
 
       // Save the PDF or display it, for example:
       doc.save('invoice.pdf');
