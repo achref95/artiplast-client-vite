@@ -17,6 +17,7 @@ const BillPage = ({ client,
       const itemHeight = 10; // Height of each item row
       const lineY = doc.internal.pageSize.height - 70; // 7 cm from the bottom
       const lineY2 = doc.internal.pageSize.height - 60;
+      const lineY3 = doc.internal.pageSize.height - 52;
       const maxItemsOnFirstPage = Math.floor((lineY - y) / itemHeight); // Maximum items that can fit on the first page
 
       // Company logo
@@ -176,6 +177,14 @@ const BillPage = ({ client,
         const x = detail2X + index * detail2Spacing;
         doc.text(detail, x, lineY + 15);
       });
+
+      
+      // Third line part 1
+      const line3Part1StartX = 15; // 1 cm from the left
+      const line3Part1EndX = 88;//doc.internal.pageSize.width - 15; // 1 cm from the right
+      doc.setLineWidth(0.5);
+      doc.setDrawColor(51, 159, 255); // Set line color to blue
+      doc.line(line3Part1StartX, lineY3, line3Part1EndX, lineY3);
        
 
 
