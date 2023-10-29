@@ -96,7 +96,8 @@ const BillPage = ({ client,
             `${item.price * item.quantity} TND`,
           ]),
           theme: 'striped',
-          styles: { textColor: [0, 0, 0], fontSize: 10, cellPadding: 2 },
+          //adjust
+          styles: { textColor: [0, 0, 0], fontSize: 10, cellPadding: 2, minCellHeight: 1 },
           columnStyles: { 0: { cellWidth: 80 } }, // Adjust column width if necessary
           margin: { top: 15 },
         });
@@ -181,10 +182,44 @@ const BillPage = ({ client,
       
       // Third line part 1
       const line3Part1StartX = 15; // 1 cm from the left
-      const line3Part1EndX = 88;//doc.internal.pageSize.width - 15; // 1 cm from the right
+      const line3Part1EndX = 88; //doc.internal.pageSize.width - 15; // 1 cm from the right
       doc.setLineWidth(0.5);
       doc.setDrawColor(51, 159, 255); // Set line color to blue
       doc.line(line3Part1StartX, lineY3, line3Part1EndX, lineY3);
+
+      // Words in the third line part 1 with specific positions in centimeters
+      const words3Part1Positions = [
+        { text: 'Timbre', x: 20 },  // 1.5 cm from the left (1 cm + 0.5 cm)
+        { text: 'XXXX', x: 45 },    // 2 cm from the left (1 cm + 1 cm)
+        { text: '1000', x: 70 }      // 3 cm from the left (1 cm + 2 cm)
+      ];
+
+      doc.setTextColor(0); // Set text color to black
+      doc.setFontSize(10);
+
+      words3Part1Positions.forEach(wordInfo => {
+        doc.text(wordInfo.text, wordInfo.x, lineY3 + 6);
+      });
+
+      // Fourth line (below the line)
+const line4StartX = 15; // 1 cm from the left
+const line4EndX = doc.internal.pageSize.width - 15; // 1 cm from the right
+const line4Y = doc.internal.pageSize.height - 44; // 4 cm from the bottom
+
+doc.setLineWidth(0.5);
+doc.setDrawColor(51, 159, 255); // Set line color to blue
+doc.line(line4StartX, line4Y, line4EndX, line4Y);
+
+// Text inside the box
+const observationText = 'Observation:';
+const observationTextX = 20; // 1.5 cm from the left
+const observationTextY = line4Y + 7; // 0.7 cm from the top of the box
+doc.setFont("times", "normal");
+doc.setTextColor(0, 0, 0);
+doc.setFontSize(10);
+doc.text(observationText, observationTextX, observationTextY);
+
+
        
 
 
