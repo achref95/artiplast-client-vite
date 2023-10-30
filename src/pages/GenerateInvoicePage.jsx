@@ -20,6 +20,7 @@ const GenerateInvoicePage = () => {
   const [discount, setDiscount] = useState("");
   const [timbre, setTimbre] = useState(1);
   const [tva, setTVA] = useState(19);
+  const [observation, setObservation] = useState("");
   const [withoutTVA, setWithoutTVA] = useState(0);
   const [invoiceTVA, setInvoiceTVA] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
@@ -41,8 +42,13 @@ const GenerateInvoicePage = () => {
     setDiscount(discountValue);
   };
 
+  // need some work here
   const handleTimbre = (e) => {
     setTimbre(e.target.value);
+  }
+
+  const handleObservation = (e) => {
+    setObservation(e.target.value);
   }
 
   const handleTVA = (e) => {
@@ -80,6 +86,7 @@ const GenerateInvoicePage = () => {
       const tvasArray = invoiceItems.map((item) => item.tva);
       const timbreAmount = timbre
       const clientName = client;
+      const ObservationValue = observation
 
       const totalAmountWithTVA = calculateTotalWithTVA(invoiceItems, timbre);
       console.log("total with TVA:", totalAmountWithTVA);
@@ -97,6 +104,7 @@ const GenerateInvoicePage = () => {
         discount: discountsArray,
         timbre: timbreAmount,
         tva: tvasArray,
+        observation: ObservationValue,
       });
 
       setWithoutTVA(a);
@@ -104,6 +112,7 @@ const GenerateInvoicePage = () => {
       setTotalAmount(totalAmountWithTVA);
       setInvoiceNumber(response.invoiceNumber);
       setBill(true);
+      setObservation("");
 
     } catch (error) {
       console.error(error);
@@ -129,7 +138,7 @@ const GenerateInvoicePage = () => {
   return (
     isLoggedIn && (
       <div>
-        <form className="space-y-2">
+        <form className="space-y-2 ml-4">
           {/* First Line */}
           <div className="flex items-center space-x-2">
             <h1>Add Client</h1>
