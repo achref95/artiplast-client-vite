@@ -19,6 +19,8 @@ const BillPage = ({ client,
       const lineY = doc.internal.pageSize.height - 70; // 7 cm from the bottom
       const lineY2 = doc.internal.pageSize.height - 60;
       const lineY3 = doc.internal.pageSize.height - 52;
+      const line5Y = doc.internal.pageSize.height - 36;
+
       const maxItemsOnFirstPage = Math.floor((lineY - y) / itemHeight); // Maximum items that can fit on the first page
 
       // Company logo
@@ -164,7 +166,7 @@ const BillPage = ({ client,
       const detail1X = 20; // 1.5 cm from the left
       const detail1Spacing = 18; // 1 cm between each word
       doc.setTextColor(0); // Set text color to blue
-      doc.setFontSize(10);
+      doc.setFontSize(8);
       line2Part1.forEach((detail, index) => {
         const x = detail1X + index * detail1Spacing;
         doc.text(detail, x, lineY + 15);
@@ -174,11 +176,14 @@ const BillPage = ({ client,
       const detail2X = 110; // 1.5 cm from the left
       const detail2Spacing = 20; // 1 cm between each word
       doc.setTextColor(0); // Set text color to blue
-      doc.setFontSize(10);
+      doc.setFontSize(8);
       line2Part2.forEach((detail, index) => {
         const x = detail2X + index * detail2Spacing;
         doc.text(detail, x, lineY + 15);
       });
+
+      //reset fontsize
+      doc.setFontSize(10);
 
       
       // Third line part 1
@@ -199,7 +204,7 @@ const BillPage = ({ client,
       doc.setFontSize(10);
 
       words3Part1Positions.forEach(wordInfo => {
-        doc.text(wordInfo.text, wordInfo.x, lineY3 + 6);
+        doc.text(wordInfo.text, wordInfo.x, lineY3 + 5);
       });
 
       // Fourth line 
@@ -213,7 +218,7 @@ const BillPage = ({ client,
 
       // TOTAL
       const totalTextX = 20; // 1.5 cm from the left
-      const totalTextY = line4Y + 6; // 0.7 cm from the top of the box
+      const totalTextY = line4Y + 5; // 0.7 cm from the top of the box
       doc.setTextColor(255, 0, 0); // Set text color to red
       doc.setFont("times", "bold");
       doc.setFontSize(10);
@@ -224,6 +229,16 @@ const BillPage = ({ client,
       const totalAmountX = totalTextX + 35;
       doc.setTextColor(0); // Set text color to black
       doc.text(`${totalAmount} TND`, totalAmountX, totalTextY);
+
+      // Fifth line
+      const line5StartX = 15; // 1 cm from the left
+      const line5EndX = 88; // 1 cm from the right
+
+      doc.setFont("times", "normal");
+      doc.setLineWidth(0.5);
+      doc.setDrawColor(51, 159, 255); // Set line color to blue
+      doc.line(line5StartX, line5Y, line5EndX, line5Y);
+
 
 
       // Text inside the box
