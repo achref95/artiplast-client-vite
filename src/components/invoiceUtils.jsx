@@ -6,13 +6,12 @@ export const calculateTotalWithTVA = (invoiceItems, timbre) => {
   invoiceItems.forEach((item) => {
     const totalForItem = (item.price - item.discount) * item.quantity;
     totalWithoutTVA += totalForItem;
-
     tvaAmount += (totalForItem * item.tva) / 100;
   });
 
   // added timbre here
-  const totalWithTVA = totalWithoutTVA + tvaAmount + timbre;
-  const roundedTotal = parseFloat(totalWithTVA.toFixed(3)); // Round to 2 decimal places
+  const totalWithTVA = totalWithoutTVA + parseFloat(tvaAmount.toFixed(2)) + timbre;
+  const roundedTotal = parseFloat(totalWithTVA.toFixed(2)); // Round to 2 decimal places
   console.log(totalWithoutTVA, tvaAmount, timbre, roundedTotal);
   return roundedTotal;
 };
@@ -38,6 +37,6 @@ export const tvaValue = (invoiceItems) => {
       tvaAmount += (totalForItem * item.tva) / 100;
     });
 
-    const amountTVA = tvaAmount;
+    const amountTVA = parseFloat(tvaAmount.toFixed(2));
     return amountTVA;
 }

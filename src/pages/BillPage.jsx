@@ -6,6 +6,7 @@ const BillPage = ({ client,
                     invoiceItems, 
                     invoiceNumber,
                     timbre,
+                    observation,
                     tva /*Taux%*/, 
                     tax /*Matricule fiscal*/, 
                     totalAmount/*Total TTC*/, 
@@ -64,7 +65,7 @@ const BillPage = ({ client,
       const roundedRectWidth = 50;
       const roundedRectHeight = 25; 
       const cornerRadius = 3; 
-      doc.setDrawColor(0);
+      doc.setDrawColor(51, 159, 255);
       doc.roundedRect(roundedRectX, roundedRectY, roundedRectWidth, roundedRectHeight, cornerRadius, cornerRadius, 'S');
 
       // Add text inside the rounded rectangle with text wrapping
@@ -239,17 +240,28 @@ const BillPage = ({ client,
       doc.setDrawColor(51, 159, 255); // Set line color to blue
       doc.line(line5StartX, line5Y, line5EndX, line5Y);
 
+      // Observation rectangle
+      const observationRectX = 15;
+      const observationRectY = doc.internal.pageSize.height - 34; // Adjust the Y position as needed
+      const observationRectWidth = 72;
+      const observationRectHeight = 16;
+      const observationCornerRadius = 3;
+      doc.setDrawColor(51, 159, 255); // Set border color to red for observation rectangle
+      doc.roundedRect(observationRectX, observationRectY, observationRectWidth, observationRectHeight, observationCornerRadius, observationCornerRadius, 'S');
 
+      // Text "Observation"
+      const observationTextX = observationRectX + observationRectWidth / 2;
+      const observationTextY = observationRectY + 5; // Adjust the Y position to center the text at the top of the rectangle
+      doc.setTextColor(51, 159, 255); // Set text color to match the border color
+      // doc.setFontStyle('bold');
+      doc.text("Observation", observationTextX, observationTextY, { align: 'center' });
 
-      // Text inside the box
-      // const observationText = 'Observation:';
-      // const observationTextX = 20; // 1.5 cm from the left
-      // const observationTextY = line4Y + 7; // 0.7 cm from the top of the box
-      // doc.setFont("times", "normal");
-      // doc.setTextColor(0, 0, 0);
-      // doc.setFontSize(10);
-      // doc.text(observationText, observationTextX, observationTextY);
-
+      // Observation note
+      const observationX = observationRectX + 4;
+      const observationY = observationRectY + 8; // Adjust the Y position to display the observation variable under the text
+      doc.setTextColor(0, 0, 0); // Set text color to black
+      doc.setFont('times', 'normal');
+      doc.text(observation, observationX, observationY);
 
        
 

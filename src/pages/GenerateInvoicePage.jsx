@@ -113,7 +113,7 @@ const GenerateInvoicePage = () => {
       setTotalAmount(totalAmountWithTVA);
       setInvoiceNumber(response.invoiceNumber);
       setBill(true);
-      setObservation("");
+      // setObservation("");
 
     } catch (error) {
       console.error(error);
@@ -257,7 +257,9 @@ const GenerateInvoicePage = () => {
                     invoiceNumber={invoiceNumber}
                     timbre={timbre}
                     tva={tva} 
-                    tax={tax} totalAmount={totalAmount} 
+                    tax={tax}
+                    observation={observation} 
+                    totalAmount={totalAmount} 
                     withoutTVA={withoutTVA} 
                     invoiceTVA={invoiceTVA} 
                     />}
