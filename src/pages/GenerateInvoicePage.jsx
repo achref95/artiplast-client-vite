@@ -129,67 +129,65 @@ const GenerateInvoicePage = () => {
   return (
     isLoggedIn && (
       <div>
-        
         <form className="space-y-2">
-  {/* First Line */}
-  <div className="flex items-center space-x-2">
-    <h1>Add Client</h1>
-    <ClientSearchBar setClient={setClient} setTax={setTax} />
-  </div>
+          {/* First Line */}
+          <div className="flex items-center space-x-2">
+            <h1>Add Client</h1>
+            <ClientSearchBar setClient={setClient} setTax={setTax} />
+          </div>
 
-  {/* Second Line */}
-  <div className="flex items-center space-x-2">
-    <h1>Add Product</h1>
-    <ProductSearchBar setProduct={setProduct} />
-    <input
-      type="number"
-      placeholder="Quantity"
-      className="input input-bordered input-primary w-full max-w-xs"
-      value={quantity}
-      onChange={handleQuantity}
-      required
-    />
-    <input
-      type="number"
-      placeholder="Discount"
-      className="input input-bordered input-primary w-full max-w-xs"
-      value={discount}
-      onChange={handleDiscount}
-      required
-    />
-    <input
-      type="number"
-      placeholder="Price"
-      className="input input-bordered input-primary w-full max-w-xs"
-      value={price}
-      onChange={handlePrice}
-      required
-    />
-  </div>
+          {/* Second Line */}
+          <div className="flex items-center space-x-2">
+            <h1>Add Product</h1>
+            <ProductSearchBar setProduct={setProduct} />
+            <input
+              type="number"
+              placeholder="Quantity"
+              className="input input-bordered input-primary w-full max-w-xs"
+              value={quantity}
+              onChange={handleQuantity}
+              required
+            />
+            <input
+              type="number"
+              placeholder="Discount"
+              className="input input-bordered input-primary w-full max-w-xs"
+              value={discount}
+              onChange={handleDiscount}
+              required
+            />
+            <input
+              type="number"
+              placeholder="Price"
+              className="input input-bordered input-primary w-full max-w-xs"
+              value={price}
+              onChange={handlePrice}
+              required
+            />
+          </div>
 
-  {/* Third Line */}
-  <div className="flex items-center space-x-2">
-    <h1>Add TVA %</h1>
-    <input
-      type="number"
-      placeholder="TVA %"
-      className="input input-bordered input-primary w-full max-w-xs"
-      value={tva}
-      onChange={handleTVA}
-      required
-    />
-  </div>
+          {/* Third Line */}
+          <div className="flex items-center space-x-2">
+            <h1>Add TVA %</h1>
+            <input
+              type="number"
+              placeholder="TVA %"
+              className="input input-bordered input-primary w-full max-w-xs"
+              value={tva}
+              onChange={handleTVA}
+              required
+            />
+          </div>
 
-  <button
-    type="button"
-    onClick={handleAddToInvoice}
-    className="btn btn-neutral"
-  >
-    Add to Invoice
-  </button>
-</form>
+          <button
+            type="button"
+            onClick={handleAddToInvoice}
+            className="btn btn-neutral"
+          >
+            Add to Invoice
+          </button>
+        </form>
 
-        
         {invoiceItems.length > 0 && (
           <div className="text-center">
             <h2>Invoice Items:</h2>
