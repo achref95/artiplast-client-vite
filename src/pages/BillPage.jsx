@@ -240,32 +240,32 @@ const BillPage = ({ client,
       doc.setDrawColor(51, 159, 255); // Set line color to blue
       doc.line(line5StartX, line5Y, line5EndX, line5Y);
 
-// Observation rectangle
-const observationRectX = 15;
-const observationRectY = doc.internal.pageSize.height - 34; // Adjust the Y position as needed
-const observationRectWidth = 72;
-const observationRectHeight = 16;
-const observationCornerRadius = 3;
-doc.setDrawColor(51, 159, 255); // Set border color to red for observation rectangle
-doc.roundedRect(observationRectX, observationRectY, observationRectWidth, observationRectHeight, observationCornerRadius, observationCornerRadius, 'S');
+      // Observation rectangle
+      const observationRectX = 15;
+      const observationRectY = doc.internal.pageSize.height - 34; // Adjust the Y position as needed
+      const observationRectWidth = 72;
+      const observationRectHeight = 16;
+      const observationCornerRadius = 3;
+      doc.setDrawColor(51, 159, 255); // Set border color to red for observation rectangle
+      doc.roundedRect(observationRectX, observationRectY, observationRectWidth, observationRectHeight, observationCornerRadius, observationCornerRadius, 'S');
 
-// Text "Observation"
-const observationTextX = observationRectX + observationRectWidth / 2;
-const observationTextY = observationRectY + 5; // Adjust the Y position to center the text at the top of the rectangle
-doc.setTextColor(51, 159, 255); // Set text color to match the border color
-doc.text("Observation", observationTextX, observationTextY, { align: 'center' });
+      // Text "Observation"
+      const observationTextX = observationRectX + observationRectWidth / 2;
+      const observationTextY = observationRectY + 5; // Adjust the Y position to center the text at the top of the rectangle
+      doc.setTextColor(51, 159, 255); // Set text color to match the border color
+      doc.text("Observation", observationTextX, observationTextY, { align: 'center' });
 
-// Observation note
-const observationX = observationRectX + 4;
-const observationY = observationRectY + 8; // Adjust the Y position to display the observation variable under the text
-doc.setTextColor(0, 0, 0); // Set text color to black
-doc.setFont('times', 'normal');
+      // Observation note
+      const observationX = observationRectX + 4;
+      const observationY = observationRectY + 8; // Adjust the Y position to display the observation variable under the text
+      doc.setTextColor(0, 0, 0); // Set text color to black
+      doc.setFont('times', 'normal');
 
-const maxObservationWidth = observationRectWidth - 8; // Set the maximum width for the observation text
-const splitObservation = doc.splitTextToSize(observation, maxObservationWidth);
-const truncatedObservation = splitObservation.join('\n'); // Split observation into lines
+      const maxObservationWidth = observationRectWidth - 8; // Set the maximum width for the observation text
+      const splitObservation = doc.splitTextToSize(observation, maxObservationWidth);
+      const truncatedObservation = splitObservation.join('\n'); // Split observation into lines
 
-doc.text(truncatedObservation, observationX, observationY);
+      doc.text(truncatedObservation, observationX, observationY);
 
 
        
