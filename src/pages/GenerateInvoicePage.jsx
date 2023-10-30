@@ -130,57 +130,65 @@ const GenerateInvoicePage = () => {
     isLoggedIn && (
       <div>
         
-        <form className="flex space-y-2 justify-around">
-          <h1>Add</h1>
-          <ClientSearchBar setClient={setClient} setTax={setTax}/>
-          <h1>Add</h1>
-          <ProductSearchBar setProduct={setProduct} />
-          <h1>Add</h1>
-          <input
-            type="number" 
-            placeholder="Price"
-            className="input input-bordered input-primary w-full max-w-xs"
-            value={price}
-            onChange={handlePrice}
-            required
-          />
-          <h1>Add</h1>
-          <input
-            type="number" 
-            placeholder="Quantity"
-            className="input input-bordered input-primary w-full max-w-xs"
-            value={quantity}
-            onChange={handleQuantity}
-            required
-          />
-          <h1>Add</h1>
-          <input
-            type="number" 
-            placeholder="Discount"
-            className="input input-bordered input-primary w-full max-w-xs"
-            value={discount}
-            onChange={handleDiscount}
-            required
-          />
-          <h1>Add</h1>
-          <input
-            type="number" 
-            placeholder="TVA %"
-            className="input input-bordered input-primary w-full max-w-xs"
-            value={tva}
-            onChange={handleTVA}
-            required
-          />
-            <button
-              type="button" // Use type="button" to prevent form submission
-              onClick={handleAddToInvoice}
-              className="btn btn-neutral"
-              // disabled={!client || !product || price === null || quantity === null}
-              >
-              Add to Invoice
-            </button>
+        <form className="space-y-2">
+  {/* First Line */}
+  <div className="flex items-center space-x-2">
+    <h1>Add Client</h1>
+    <ClientSearchBar setClient={setClient} setTax={setTax} />
+  </div>
 
-        </form>
+  {/* Second Line */}
+  <div className="flex items-center space-x-2">
+    <h1>Add Product</h1>
+    <ProductSearchBar setProduct={setProduct} />
+    <input
+      type="number"
+      placeholder="Quantity"
+      className="input input-bordered input-primary w-full max-w-xs"
+      value={quantity}
+      onChange={handleQuantity}
+      required
+    />
+    <input
+      type="number"
+      placeholder="Discount"
+      className="input input-bordered input-primary w-full max-w-xs"
+      value={discount}
+      onChange={handleDiscount}
+      required
+    />
+    <input
+      type="number"
+      placeholder="Price"
+      className="input input-bordered input-primary w-full max-w-xs"
+      value={price}
+      onChange={handlePrice}
+      required
+    />
+  </div>
+
+  {/* Third Line */}
+  <div className="flex items-center space-x-2">
+    <h1>Add TVA %</h1>
+    <input
+      type="number"
+      placeholder="TVA %"
+      className="input input-bordered input-primary w-full max-w-xs"
+      value={tva}
+      onChange={handleTVA}
+      required
+    />
+  </div>
+
+  <button
+    type="button"
+    onClick={handleAddToInvoice}
+    className="btn btn-neutral"
+  >
+    Add to Invoice
+  </button>
+</form>
+
         
         {invoiceItems.length > 0 && (
           <div className="text-center">
