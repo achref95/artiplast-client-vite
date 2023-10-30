@@ -212,17 +212,18 @@ const BillPage = ({ client,
       doc.line(line4StartX, line4Y, line4EndX, line4Y);
 
       // TOTAL
-const totalTextX = 20; // 1.5 cm from the left
-const totalTextY = line4Y + 6; // 0.7 cm from the top of the box
-doc.setTextColor(255, 0, 0); // Set text color to red
-doc.setFontSize(10);
-doc.text('TOTAL', totalTextX, totalTextY);
+      const totalTextX = 20; // 1.5 cm from the left
+      const totalTextY = line4Y + 6; // 0.7 cm from the top of the box
+      doc.setTextColor(255, 0, 0); // Set text color to red
+      doc.setFont("times", "bold");
+      doc.setFontSize(10);
+      doc.text('TOTAL', totalTextX, totalTextY);
 
 
-// Spacing between "TOTAL" and totalAmount
-const totalAmountX = totalTextX + 35;
-doc.setTextColor(0); // Set text color to black
-doc.text(`${totalAmount} TND`, totalAmountX, totalTextY);
+      // Spacing between "TOTAL" and totalAmount
+      const totalAmountX = totalTextX + 35;
+      doc.setTextColor(0); // Set text color to black
+      doc.text(`${totalAmount} TND`, totalAmountX, totalTextY);
 
 
       // Text inside the box
