@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
+import Nav from "../components/Nav";
 import { calculateTotalWithTVA,
          calculateTotalWithoutTVA, 
          tvaValue } from "../components/invoiceUtils";
@@ -137,7 +138,8 @@ const GenerateInvoicePage = () => {
 
   return (
     isLoggedIn && (
-      <div>
+      <div className="h-screen bg-slate-50">
+        <Nav />
         <form className="space-y-2 ml-4">
           {/* First Line */}
           <div className="flex items-center space-x-2">
@@ -159,18 +161,18 @@ const GenerateInvoicePage = () => {
             />
             <input
               type="number"
-              placeholder="Discount"
-              className="input input-bordered input-primary w-full max-w-xs"
-              value={discount}
-              onChange={handleDiscount}
-              required
-            />
-            <input
-              type="number"
               placeholder="Price"
               className="input input-bordered input-primary w-full max-w-xs"
               value={price}
               onChange={handlePrice}
+              required
+            />
+            <input
+              type="number"
+              placeholder="Discount"
+              className="input input-bordered input-primary w-full max-w-xs"
+              value={discount}
+              onChange={handleDiscount}
               required
             />
           </div>
@@ -186,7 +188,16 @@ const GenerateInvoicePage = () => {
               onChange={handleTVA}
               required
             />
+            {/* Add Observation Input */}
+            <input
+              type="text"
+              placeholder="Observation"
+              className="input input-bordered input-primary w-full max-w-xs"
+              value={observation}
+              onChange={handleObservation}
+            />
           </div>
+
 
           <button
             type="button"
