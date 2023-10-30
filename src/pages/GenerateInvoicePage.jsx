@@ -209,7 +209,7 @@ const GenerateInvoicePage = () => {
         </form>
 
         {invoiceItems.length > 0 && (
-          <div className="text-center">
+          <div className="text-center bg-slate-50">
             <h2>Invoice Items:</h2>
             <table className="w-full mx-auto">
               <thead>
