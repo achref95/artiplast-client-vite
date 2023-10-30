@@ -202,23 +202,37 @@ const BillPage = ({ client,
         doc.text(wordInfo.text, wordInfo.x, lineY3 + 6);
       });
 
-      // Fourth line (below the line)
-const line4StartX = 15; // 1 cm from the left
-const line4EndX = doc.internal.pageSize.width - 15; // 1 cm from the right
-const line4Y = doc.internal.pageSize.height - 44; // 4 cm from the bottom
+      // Fourth line 
+      const line4StartX = 15; // 1 cm from the left
+      const line4EndX = 88; // 1 cm from the right
+      const line4Y = doc.internal.pageSize.height - 44; // 4 cm from the bottom
 
-doc.setLineWidth(0.5);
-doc.setDrawColor(51, 159, 255); // Set line color to blue
-doc.line(line4StartX, line4Y, line4EndX, line4Y);
+      doc.setLineWidth(0.5);
+      doc.setDrawColor(51, 159, 255); // Set line color to blue
+      doc.line(line4StartX, line4Y, line4EndX, line4Y);
 
-// Text inside the box
-const observationText = 'Observation:';
-const observationTextX = 20; // 1.5 cm from the left
-const observationTextY = line4Y + 7; // 0.7 cm from the top of the box
-doc.setFont("times", "normal");
-doc.setTextColor(0, 0, 0);
+      // TOTAL
+const totalTextX = 20; // 1.5 cm from the left
+const totalTextY = line4Y + 6; // 0.7 cm from the top of the box
+doc.setTextColor(255, 0, 0); // Set text color to red
 doc.setFontSize(10);
-doc.text(observationText, observationTextX, observationTextY);
+doc.text('TOTAL', totalTextX, totalTextY);
+
+
+// Spacing between "TOTAL" and totalAmount
+const totalAmountX = totalTextX + 35;
+doc.setTextColor(0); // Set text color to black
+doc.text(`${totalAmount} TND`, totalAmountX, totalTextY);
+
+
+      // Text inside the box
+      // const observationText = 'Observation:';
+      // const observationTextX = 20; // 1.5 cm from the left
+      // const observationTextY = line4Y + 7; // 0.7 cm from the top of the box
+      // doc.setFont("times", "normal");
+      // doc.setTextColor(0, 0, 0);
+      // doc.setFontSize(10);
+      // doc.text(observationText, observationTextX, observationTextY);
 
 
        
