@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import logo from '../assets/artiplast-logo.jpeg'
 const BillPage = ({ client,
                     invoiceItems, 
                     invoiceNumber,
+                    timbre,
                     tva /*Taux%*/, 
                     tax /*Matricule fiscal*/, 
                     totalAmount/*Total TTC*/, 
@@ -77,7 +78,7 @@ const BillPage = ({ client,
       //////////////////////////////////////
 
       // Set font style back to normal
-      doc.setFont("normal"); 
+      // doc.setFont("normal"); 
       doc.setFontSize(14);
       doc.setTextColor(0, 0, 0);
       y += 20; // Move down after adding logo and company details
@@ -169,7 +170,7 @@ const BillPage = ({ client,
         doc.text(detail, x, lineY + 15);
       });
 
-      const line2Part2 = [withoutTVA.toString(), invoiceTVA.toString(), '1000', totalAmountText];
+      const line2Part2 = [withoutTVA.toString(), invoiceTVA.toString(), timbre.toString(), totalAmountText];
       const detail2X = 110; // 1.5 cm from the left
       const detail2Spacing = 20; // 1 cm between each word
       doc.setTextColor(0); // Set text color to blue
@@ -191,7 +192,7 @@ const BillPage = ({ client,
       const words3Part1Positions = [
         { text: 'Timbre', x: 20 },  // 1.5 cm from the left (1 cm + 0.5 cm)
         { text: 'XXXX', x: 45 },    // 2 cm from the left (1 cm + 1 cm)
-        { text: '1000', x: 70 }      // 3 cm from the left (1 cm + 2 cm)
+        { text: timbre.toString(), x: 70 }      // 3 cm from the left (1 cm + 2 cm)
       ];
 
       doc.setTextColor(0); // Set text color to black

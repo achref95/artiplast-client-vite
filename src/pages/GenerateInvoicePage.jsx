@@ -18,6 +18,7 @@ const GenerateInvoicePage = () => {
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [discount, setDiscount] = useState("");
+  const [timbre, setTimbre] = useState(1);
   const [tva, setTVA] = useState(19);
   const [withoutTVA, setWithoutTVA] = useState(0);
   const [invoiceTVA, setInvoiceTVA] = useState(0);
@@ -39,6 +40,10 @@ const GenerateInvoicePage = () => {
     const discountValue = isNaN(discountInputValue) ? 0 : discountInputValue;
     setDiscount(discountValue);
   };
+
+  const handleTimbre = (e) => {
+    setTimbre(e.target.value);
+  }
 
   const handleTVA = (e) => {
     const tvaInputValue = parseInt(e.target.value);
@@ -73,10 +78,11 @@ const GenerateInvoicePage = () => {
       const quantitiesArray = invoiceItems.map((item) => item.quantity);
       const discountsArray = invoiceItems.map((item) => item.discount);
       const tvasArray = invoiceItems.map((item) => item.tva);
+      const timbreAmount = timbre
       const clientName = client;
 
-      const totalAmountWithTVA = calculateTotalWithTVA(invoiceItems);
-      console.log("total with TVA:", totalAmountWithTVA)
+      const totalAmountWithTVA = calculateTotalWithTVA(invoiceItems, timbre);
+      console.log("total with TVA:", totalAmountWithTVA);
       const a = calculateTotalWithoutTVA(invoiceItems);
       console.log("total without TVA:", a);
       const b = tvaValue(invoiceItems);
@@ -89,6 +95,7 @@ const GenerateInvoicePage = () => {
         price: pricesArray,
         quantity: quantitiesArray,
         discount: discountsArray,
+        timbre: timbreAmount,
         tva: tvasArray,
       });
 
@@ -222,6 +229,7 @@ const GenerateInvoicePage = () => {
                     client={client} 
                     invoiceItems={invoiceItems} 
                     invoiceNumber={invoiceNumber}
+                    timbre={timbre}
                     tva={tva} 
                     tax={tax} totalAmount={totalAmount} 
                     withoutTVA={withoutTVA} 

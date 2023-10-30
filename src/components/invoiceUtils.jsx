@@ -1,4 +1,4 @@
-export const calculateTotalWithTVA = (invoiceItems) => {
+export const calculateTotalWithTVA = (invoiceItems, timbre) => {
     let totalWithoutTVA = 0;
     let tvaAmount = 0;
   
@@ -8,8 +8,8 @@ export const calculateTotalWithTVA = (invoiceItems) => {
   
       tvaAmount += (totalForItem * item.tva) / 100;
     });
-  
-    const totalWithTVA = totalWithoutTVA + tvaAmount;
+    // added timbre here
+    const totalWithTVA = totalWithoutTVA + tvaAmount + timbre;
     return totalWithTVA;
   };
 
