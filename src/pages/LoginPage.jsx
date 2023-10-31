@@ -49,13 +49,20 @@ const LoginPage = () => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <span className="loading loading-ring loading-xs"></span>
-        <span className="loading loading-ring loading-sm"></span>
-        <span className="loading loading-ring loading-md"></span>
-        <span className="loading loading-ring loading-lg"></span>
-      </div>    );
-  }
+      <div className="flex flex-col items-center justify-center h-screen">
+        <div className="mb-8">
+          <span className="loading loading-ring loading-xs"></span>
+          <span className="loading loading-ring loading-sm"></span>
+          <span className="loading loading-ring loading-md"></span>
+          <span className="loading loading-ring loading-lg"></span>
+        </div>
+        <div className="text-center">
+          <p className="text-lg font-bold mb-2">Hang Tight!</p>
+          <p>Our server is firing up its engines. Due to the cosmic distances in cyberspace, this may take up to a minute. Prepare for launch!</p>
+        </div>
+      </div>
+    );
+  }  
 
   return (
     !isLoggedIn && (
