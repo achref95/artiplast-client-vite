@@ -62,7 +62,11 @@ const LoginPage = () => {
         </div>
       </div>
     );
-  }  
+  }
+  
+  if (isLoggedIn) {
+    return <div>You're already logged in, go to <Link to="/"><strong>Home Page</strong></Link></div>;
+  }
 
   return (
     !isLoggedIn && (
