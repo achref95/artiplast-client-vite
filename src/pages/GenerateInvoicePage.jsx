@@ -154,7 +154,7 @@ const GenerateInvoicePage = () => {
             <input
               type="number"
               placeholder="Quantity"
-              className="input input-bordered input-primary w-full max-w-xs"
+              className="input input-bordered w-full max-w-xs"
               value={quantity}
               onChange={handleQuantity}
               required
@@ -162,7 +162,7 @@ const GenerateInvoicePage = () => {
             <input
               type="number"
               placeholder="Price"
-              className="input input-bordered input-primary w-full max-w-xs"
+              className="input input-bordered w-full max-w-xs"
               value={price}
               onChange={handlePrice}
               required
@@ -170,7 +170,7 @@ const GenerateInvoicePage = () => {
             <input
               type="number"
               placeholder="Discount"
-              className="input input-bordered input-primary w-full max-w-xs"
+              className="input input-bordered w-full max-w-xs"
               value={discount}
               onChange={handleDiscount}
               required
@@ -183,7 +183,7 @@ const GenerateInvoicePage = () => {
             <input
               type="number"
               placeholder="TVA %"
-              className="input input-bordered input-primary w-full max-w-xs"
+              className="input input-bordered w-full max-w-xs"
               value={tva}
               onChange={handleTVA}
               required
@@ -192,7 +192,7 @@ const GenerateInvoicePage = () => {
             <input
               type="text"
               placeholder="Observation"
-              className="input input-bordered input-primary w-full max-w-xs"
+              className="input input-bordered w-full max-w-xs"
               value={observation}
               onChange={handleObservation}
             />
@@ -232,7 +232,7 @@ const GenerateInvoicePage = () => {
                     <td>{`${item.tva}%` || 0}</td>
                     <td>
                       <button 
-                        className="btn btn-primary"
+                        className="btn btn-error"
                         onClick={() => handleDelete(index)}
                       >
                             del
@@ -243,7 +243,7 @@ const GenerateInvoicePage = () => {
               </tbody>
             </table>
             <button
-              className="btn btn-primary mt-4"
+              className="btn btn-accent mt-4 mb-4"
               onClick={handleSubmit}
               disabled={isLoading}
             >

@@ -53,7 +53,7 @@ const ClientSearchBar = ({ setClient, setTax }) => {
       <input
         type="text"
         placeholder="Search clients..."
-        className="input input-bordered input-primary w-full max-w-xs"
+        className="input input-bordered w-full max-w-xs"
         value={searchTerm}
         onChange={handleInputChange}
       />
