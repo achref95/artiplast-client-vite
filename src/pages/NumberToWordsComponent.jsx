@@ -1,32 +1,42 @@
-import { useState } from 'react';
-import numberToWords from 'number-to-words';
+import React, { useEffect, useState } from 'react';
+import { ToWords } from 'to-words';
 
+const NumberToWordsComponent = () => {
+  const [words, setWords] = useState('');
 
+  useEffect(() => {
+    const numberToConvert = 137.125;
+    const formattedNumber = Math.floor(numberToConvert); // Remove decimal part
+    const toWords = new ToWords({
+      localeCode: 'fr-FR',
+      converterOptions: {
+        currency: true,
+        ignoreDecimal: false,
+        ignoreZeroCurrency: false,
+        doNotAddOnly: false,
+        currencyOptions: {
+          name: 'Dinar',
+          plural: 'Dinars',
+          symbol: '',
+          fractionalUnit: {
+            name: 'Millime',
+            plural: 'Millimes',
+            symbol: '',
+          },
+        },
+      },
+    });
 
-    
-    const NumberToWordsComponent = () => {
-      const [number, setNumber] = useState(123); // Replace with your state or input value
-    
-      const convertToWords = () => {
-        const words = numberToWords.toWords(number, { language: 'fr' });
-        console.log(words); // Output: "cent vingt-trois"
-        // You can set the words in state or display it in your component
-      };
-    
-      return (
-        <div>
-          <input
-            type="number"
-            value={number}
-            onChange={(e) => setNumber(parseInt(e.target.value))}
-          />
-          <button onClick={convertToWords}>Convert to Words</button>
-        </div>
-      );
-    };
-    
+    const convertedWords = toWords.convert(formattedNumber, { currency: true });
+    setWords(convertedWords);
+  }, []); // Empty dependency array means this effect will run once after the initial render
 
-    
+  return (
+    <div>
+      <h2>Number in Words:</h2>
+      <p>{words}</p>
+    </div>
+  );
+};
 
-
-export default NumberToWordsComponent
+export default NumberToWordsComponent;
