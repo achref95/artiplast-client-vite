@@ -15,9 +15,9 @@ const BillPage = ({ client,
   useEffect(() => {
     const generateInvoice = () => {
       const doc = new jsPDF();
-      let y = 15; // Initial vertical position on the page
-      const itemHeight = 10; // Height of each item row
-      const lineY = doc.internal.pageSize.height - 70; // 7 cm from the bottom
+      let y = 15; 
+      const itemHeight = 10; 
+      const lineY = doc.internal.pageSize.height - 70; 
       const lineY2 = doc.internal.pageSize.height - 60;
       const lineY3 = doc.internal.pageSize.height - 52;
       const line5Y = doc.internal.pageSize.height - 36;
@@ -117,16 +117,16 @@ const BillPage = ({ client,
 
       // Draw the line at the bottom of the last page with specified blue color
       const lineStartX = 10; // 1 cm from the left
-      const lineEndX = doc.internal.pageSize.width - 10; // 1 cm from the right
+      const lineEndX = doc.internal.pageSize.width - 10; 
       doc.setLineWidth(0.5);
-      doc.setDrawColor(51, 159, 255); // Set line color to blue
+      doc.setDrawColor(51, 159, 255); 
       doc.line(lineStartX, lineY, lineEndX, lineY);
 
         // Second line words
       const words1 = ['Code', 'Base', 'Taux', 'Montant'];
-      const word1X = 20; // 1.5 cm from the left
-      const words1Spacing = 18; // 1 cm between each word
-      doc.setTextColor(51, 159, 255); // Set text color to blue
+      const word1X = 20; 
+      const words1Spacing = 18; 
+      doc.setTextColor(51, 159, 255);
       doc.setFontSize(10);
       words1.forEach((word, index) => {
         const x = word1X + index * words1Spacing;
@@ -136,7 +136,7 @@ const BillPage = ({ client,
       const words2 = ['Total HT', 'TVA', 'Timbre', 'Total TTC'];
       const word2X = 110;
       const words2Spacing = 20;
-      doc.setTextColor(0); // Set text color to blue
+      doc.setTextColor(0); 
       doc.setFontSize(10);
       words2.forEach((word, index) => {
         const x = word2X + index * words2Spacing;
@@ -144,29 +144,27 @@ const BillPage = ({ client,
       });
 
       // Second line part 1
-      const line2Part1StartX = 15; // 1 cm from the left
-      const line2Part1EndX = 88;//doc.internal.pageSize.width - 15; // 1 cm from the right
+      const line2Part1StartX = 15; 
+      const line2Part1EndX = 88;
       doc.setLineWidth(0.5);
-      doc.setDrawColor(51, 159, 255); // Set line color to blue
+      doc.setDrawColor(51, 159, 255); 
       doc.line(line2Part1StartX, lineY2, line2Part1EndX, lineY2);
       // Second line part 2
-      const line2Part2StartX = 108; // 1 cm from the left
+      const line2Part2StartX = 108; 
       const line2Part2EndX = doc.internal.pageSize.width - 18;
       doc.setLineWidth(0.5);
-      doc.setDrawColor(51, 159, 255); // Set line color to blue
+      doc.setDrawColor(51, 159, 255); 
       doc.line(line2Part2StartX, lineY2, line2Part2EndX, lineY2);
 
       // Total TTC
       const totalAmountText = `${totalAmount} TND`;
-      // const totalAmountWidth = doc.getStringUnitWidth(totalAmountText) * doc.internal.getFontSize() / doc.internal.scaleFactor;
-      // const totalAmountX = doc.internal.pageSize.width - 20 - totalAmountWidth;
-      // doc.text(totalAmountText, totalAmountX, lineY + 15);
+
 
       // line 2
       const line2Part1 = ['TVA Col', withoutTVA.toString(), `${tva} %`, invoiceTVA.toString()];
-      const detail1X = 20; // 1.5 cm from the left
-      const detail1Spacing = 18; // 1 cm between each word
-      doc.setTextColor(0); // Set text color to blue
+      const detail1X = 20; 
+      const detail1Spacing = 18; 
+      doc.setTextColor(0); 
       doc.setFontSize(8);
       line2Part1.forEach((detail, index) => {
         const x = detail1X + index * detail1Spacing;
@@ -174,9 +172,9 @@ const BillPage = ({ client,
       });
 
       const line2Part2 = [withoutTVA.toString(), invoiceTVA.toString(), timbre.toString(), totalAmountText];
-      const detail2X = 110; // 1.5 cm from the left
-      const detail2Spacing = 20; // 1 cm between each word
-      doc.setTextColor(0); // Set text color to blue
+      const detail2X = 110; 
+      const detail2Spacing = 20; 
+      doc.setTextColor(0); 
       doc.setFontSize(8);
       line2Part2.forEach((detail, index) => {
         const x = detail2X + index * detail2Spacing;
@@ -188,20 +186,20 @@ const BillPage = ({ client,
 
       
       // Third line part 1
-      const line3Part1StartX = 15; // 1 cm from the left
-      const line3Part1EndX = 88; //doc.internal.pageSize.width - 15; // 1 cm from the right
+      const line3Part1StartX = 15; 
+      const line3Part1EndX = 88; 
       doc.setLineWidth(0.5);
-      doc.setDrawColor(51, 159, 255); // Set line color to blue
+      doc.setDrawColor(51, 159, 255); 
       doc.line(line3Part1StartX, lineY3, line3Part1EndX, lineY3);
 
       // Words in the third line part 1 with specific positions in centimeters
       const words3Part1Positions = [
-        { text: 'Timbre', x: 20 },  // 1.5 cm from the left (1 cm + 0.5 cm)
-        { text: 'XXX', x: 45 },    // 2 cm from the left (1 cm + 1 cm)
-        { text: timbre.toString(), x: 70 }      // 3 cm from the left (1 cm + 2 cm)
+        { text: 'Timbre', x: 20 },  
+        { text: 'XXX', x: 45 },    
+        { text: timbre.toString(), x: 70 }    
       ];
 
-      doc.setTextColor(0); // Set text color to black
+      doc.setTextColor(0); 
       doc.setFontSize(10);
 
       words3Part1Positions.forEach(wordInfo => {
@@ -212,43 +210,52 @@ const BillPage = ({ client,
       const line3Part2StartX = 90;
       const line3Part2EndX = 158;
       doc.setLineWidth(0.5);
-      doc.setDrawColor(51, 159, 255); // Set line color to blue
+      doc.setDrawColor(51, 159, 255); 
       doc.line(line3Part2StartX, lineY3 + 7, line3Part2EndX, lineY3 + 7);
 
       // Third line part 3
       const line3Part3StartX = 164;
       const line3Part3EndX = 192;
       doc.setLineWidth(0.5);
-      doc.setDrawColor(51, 159, 255); // Set line color to blue
+      doc.setDrawColor(51, 159, 255); 
       doc.line(line3Part3StartX, lineY3 + 5, line3Part3EndX, lineY3 + 5);
 
 
 
       // Fourth line part 1
-      const line4StartX = 15; // 1 cm from the left
-      const line4EndX = 78; // 1 cm from the right
-      const line4Y = doc.internal.pageSize.height - 44; // 4 cm from the bottom
+      const line4StartX = 15; 
+      const line4EndX = 78; 
+      const line4Y = doc.internal.pageSize.height - 44; 
 
       doc.setLineWidth(0.5);
-      doc.setDrawColor(51, 159, 255); // Set line color to blue
+      doc.setDrawColor(51, 159, 255); 
       doc.line(line4StartX, line4Y, line4EndX, line4Y);
 
       // Fourth line part 2
       const line4Part2StartX = 90;
       const line4Part2EndX = 158;
       doc.setLineWidth(0.5);
-      doc.setDrawColor(51, 159, 255); // Set line color to blue
+      doc.setDrawColor(51, 159, 255); 
       doc.line(line4Part2StartX, lineY3 + 18, line4Part2EndX, lineY3 + 18);
 
       // TEXT
       const textStartX = 90
+      doc.setTextColor(192,192,192)
       doc.text('Arretée la présente facture à la somme de :', textStartX, lineY3 + 13)
+
+      // Signature
+      const signStartX = 165;
+      doc.setTextColor(51, 159, 255);
+      doc.setFont("times", "bold");
+      doc.setFontSize(9);
+      doc.text('signature et cachet', signStartX, lineY3 + 13);
+
 
 
       // TOTAL
-      const totalTextX = 20; // 1.5 cm from the left
-      const totalTextY = line4Y + 5; // 0.7 cm from the top of the box
-      doc.setTextColor(255, 0, 0); // Set text color to red
+      const totalTextX = 20; 
+      const totalTextY = line4Y + 5; 
+      doc.setTextColor(	220, 20, 60); 
       doc.setFont("times", "bold");
       doc.setFontSize(10);
       doc.text('TOTAL', totalTextX, totalTextY);
@@ -256,21 +263,21 @@ const BillPage = ({ client,
 
       // Spacing between "TOTAL" and totalAmount
       const totalAmountX = totalTextX + 35;
-      doc.setTextColor(0); // Set text color to black
+      doc.setTextColor(0); 
       doc.text(`${totalAmount} TND`, totalAmountX, totalTextY);
 
       // Fifth line
-      const line5StartX = 15; // 1 cm from the left
-      const line5EndX = 78; // 1 cm from the right
+      const line5StartX = 15; 
+      const line5EndX = 78; 
 
       doc.setFont("times", "normal");
       doc.setLineWidth(0.5);
-      doc.setDrawColor(51, 159, 255); // Set line color to blue
+      doc.setDrawColor(51, 159, 255); 
       doc.line(line5StartX, line5Y, line5EndX, line5Y);
 
       // Observation rectangle
       const observationRectX = 15;
-      const observationRectY = doc.internal.pageSize.height - 34; // Adjust the Y position as needed
+      const observationRectY = doc.internal.pageSize.height - 34; 
       const observationRectWidth = 62;
       const observationRectHeight = 16;
       const observationCornerRadius = 3;
@@ -280,13 +287,13 @@ const BillPage = ({ client,
       // Text "Observation"
       const observationTextX = observationRectX + observationRectWidth / 2;
       const observationTextY = observationRectY + 5; // Adjust the Y position to center the text at the top of the rectangle
-      doc.setTextColor(51, 159, 255); // Set text color to match the border color
+      doc.setTextColor(51, 159, 255); 
       doc.text("Observation", observationTextX, observationTextY, { align: 'center' });
 
       // Observation note
       const observationX = observationRectX + 4;
-      const observationY = observationRectY + 8; // Adjust the Y position to display the observation variable under the text
-      doc.setTextColor(0, 0, 0); // Set text color to black
+      const observationY = observationRectY + 8; 
+      doc.setTextColor(0, 0, 0); 
       doc.setFont('times', 'normal');
 
       const maxObservationWidth = observationRectWidth - 8; // Set the maximum width for the observation text
@@ -299,7 +306,7 @@ const BillPage = ({ client,
       const lastStartX = 90;
       const lastEndX = 158;
       doc.setLineWidth(0.5);
-      doc.setDrawColor(51, 159, 255); // Set line color to blue
+      doc.setDrawColor(51, 159, 255); 
       doc.line(lastStartX, lineY3 + 34, lastEndX, lineY3 + 34);
 
       // Footer
@@ -312,12 +319,11 @@ const BillPage = ({ client,
           'R.C: B-051432009 - TVA: 000/ma/1079207/Z'
         ];
         const footerFontSize = 5;
-        const footerLineHeight = 0.7; // 1mm spacing between lines
-        const lineHeightInPoints = (footerLineHeight / 25.4) * 72; // Convert mm to points (1 inch = 25.4mm)
-        const footerTextHeight = footerText.length * lineHeightInPoints; // Total height of the footer text
-        const footerY = lineY3 + 38; // Bottom Y position for the footer text
+        const footerLineHeight = 0.7; // 0.7mm spacing between lines
+        const lineHeightInPoints = (footerLineHeight / 25.4) * 72; 
+        const footerY = lineY3 + 38; 
       
-        doc.setTextColor(0); // Set text color to black
+        doc.setTextColor(192,192,192)
         doc.setFontSize(footerFontSize);
       
         // Add each line of the footer text
@@ -330,7 +336,7 @@ const BillPage = ({ client,
 
       /////////////////////////////////////////////////////////////////////////////////
 
-      // Save the PDF or display it, for example:
+      // Save the PDF
       doc.save('invoice.pdf');
     };
 
