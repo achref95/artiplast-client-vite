@@ -122,7 +122,7 @@ const BillPage = ({ client,
       doc.setDrawColor(51, 159, 255); // Set line color to blue
       doc.line(lineStartX, lineY, lineEndX, lineY);
 
-        // 1st line words
+        // Second line words
       const words1 = ['Code', 'Base', 'Taux', 'Montant'];
       const word1X = 20; // 1.5 cm from the left
       const words1Spacing = 18; // 1 cm between each word
@@ -197,7 +197,7 @@ const BillPage = ({ client,
       // Words in the third line part 1 with specific positions in centimeters
       const words3Part1Positions = [
         { text: 'Timbre', x: 20 },  // 1.5 cm from the left (1 cm + 0.5 cm)
-        { text: 'XXXX', x: 45 },    // 2 cm from the left (1 cm + 1 cm)
+        { text: 'XXX', x: 45 },    // 2 cm from the left (1 cm + 1 cm)
         { text: timbre.toString(), x: 70 }      // 3 cm from the left (1 cm + 2 cm)
       ];
 
@@ -208,14 +208,42 @@ const BillPage = ({ client,
         doc.text(wordInfo.text, wordInfo.x, lineY3 + 5);
       });
 
-      // Fourth line 
+      // Third line part 2
+      const line3Part2StartX = 90;
+      const line3Part2EndX = 158;
+      doc.setLineWidth(0.5);
+      doc.setDrawColor(51, 159, 255); // Set line color to blue
+      doc.line(line3Part2StartX, lineY3 + 7, line3Part2EndX, lineY3 + 7);
+
+      // Third line part 3
+      const line3Part3StartX = 164;
+      const line3Part3EndX = 192;
+      doc.setLineWidth(0.5);
+      doc.setDrawColor(51, 159, 255); // Set line color to blue
+      doc.line(line3Part3StartX, lineY3 + 5, line3Part3EndX, lineY3 + 5);
+
+
+
+      // Fourth line part 1
       const line4StartX = 15; // 1 cm from the left
-      const line4EndX = 88; // 1 cm from the right
+      const line4EndX = 78; // 1 cm from the right
       const line4Y = doc.internal.pageSize.height - 44; // 4 cm from the bottom
 
       doc.setLineWidth(0.5);
       doc.setDrawColor(51, 159, 255); // Set line color to blue
       doc.line(line4StartX, line4Y, line4EndX, line4Y);
+
+      // Fourth line part 2
+      const line4Part2StartX = 90;
+      const line4Part2EndX = 158;
+      doc.setLineWidth(0.5);
+      doc.setDrawColor(51, 159, 255); // Set line color to blue
+      doc.line(line4Part2StartX, lineY3 + 18, line4Part2EndX, lineY3 + 18);
+
+      // TEXT
+      const textStartX = 90
+      doc.text('Arretée la présente facture à la somme de :', textStartX, lineY3 + 13)
+
 
       // TOTAL
       const totalTextX = 20; // 1.5 cm from the left
@@ -233,7 +261,7 @@ const BillPage = ({ client,
 
       // Fifth line
       const line5StartX = 15; // 1 cm from the left
-      const line5EndX = 88; // 1 cm from the right
+      const line5EndX = 78; // 1 cm from the right
 
       doc.setFont("times", "normal");
       doc.setLineWidth(0.5);
@@ -243,7 +271,7 @@ const BillPage = ({ client,
       // Observation rectangle
       const observationRectX = 15;
       const observationRectY = doc.internal.pageSize.height - 34; // Adjust the Y position as needed
-      const observationRectWidth = 72;
+      const observationRectWidth = 62;
       const observationRectHeight = 16;
       const observationCornerRadius = 3;
       doc.setDrawColor(51, 159, 255); // Set border color to red for observation rectangle
@@ -267,9 +295,38 @@ const BillPage = ({ client,
 
       doc.text(truncatedObservation, observationX, observationY);
 
+      // Last line
+      const lastStartX = 90;
+      const lastEndX = 158;
+      doc.setLineWidth(0.5);
+      doc.setDrawColor(51, 159, 255); // Set line color to blue
+      doc.line(lastStartX, lineY3 + 34, lastEndX, lineY3 + 34);
 
-       
-
+      // Footer
+        // Add the footer text
+        const footerText = [
+          'Sté IDEAL ARTIPLAST',
+          'Vente en Gros des Articles en Plastique - Av. de l\'Environnement',
+          'Medjez El Bab - Tel 78 560 234 - GSM 98 779 826',
+          'FAX: 78 560 687',
+          'R.C: B-051432009 - TVA: 000/ma/1079207/Z'
+        ];
+        const footerFontSize = 5;
+        const footerLineHeight = 0.7; // 1mm spacing between lines
+        const lineHeightInPoints = (footerLineHeight / 25.4) * 72; // Convert mm to points (1 inch = 25.4mm)
+        const footerTextHeight = footerText.length * lineHeightInPoints; // Total height of the footer text
+        const footerY = lineY3 + 38; // Bottom Y position for the footer text
+      
+        doc.setTextColor(0); // Set text color to black
+        doc.setFontSize(footerFontSize);
+      
+        // Add each line of the footer text
+        footerText.forEach((line, index) => {
+          const textWidth = doc.getStringUnitWidth(line) * footerFontSize / doc.internal.scaleFactor;
+          const textX = (doc.internal.pageSize.width - textWidth) / 2;
+          const textY = footerY + index * lineHeightInPoints;
+          doc.text(line, textX, textY);
+        });
 
       /////////////////////////////////////////////////////////////////////////////////
 

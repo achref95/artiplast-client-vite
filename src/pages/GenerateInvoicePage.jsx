@@ -19,7 +19,7 @@ const GenerateInvoicePage = () => {
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [discount, setDiscount] = useState("");
-  const [timbre, setTimbre] = useState(1);
+  const [timbre, setTimbre] = useState(1000);
   const [tva, setTVA] = useState(19);
   const [observation, setObservation] = useState("");
   const [withoutTVA, setWithoutTVA] = useState(0);

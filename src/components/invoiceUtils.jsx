@@ -25,7 +25,7 @@ export const calculateTotalWithoutTVA = (invoiceItems) => {
       totalWithoutTVA += totalForItem;
     });
     
-    const totalnoTVA = totalWithoutTVA;
+    const totalnoTVA = parseFloat(totalWithoutTVA.toFixed(2));
     return totalnoTVA;
 }
 
