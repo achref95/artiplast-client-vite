@@ -11,6 +11,7 @@ import AddProductPage from "./pages/AddProductPage";
 import AddClientPage from "./pages/AddClientPage";
 import ClientDetailPage from "./pages/ClientDetailPage";
 import NumberToWordsComponent from "./pages/NumberToWordsComponent";
+import InvoiceDetailPage from "./pages/InvoiceDetailPage";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/add-product" element={<AddProductPage />} />
         <Route path="/add-client" element={<AddClientPage />} />
         <Route path="/client/:clientId" element={<ClientDetailPage />} />
+        <Route path="/client/:clientId/:invoiceId" element={<InvoiceDetailPage />} />
         <Route path="/test" element={<NumberToWordsComponent />} />
         <Route path="/*" element={<NotFoundPage />} />
       </Routes>
