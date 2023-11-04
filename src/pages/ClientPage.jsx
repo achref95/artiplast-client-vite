@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
+import Nav from "../components/Nav";
 import { AuthContext } from "../context/auth.context";
 import { Link } from "react-router-dom";
 import productMethods from "../services/product.service";
@@ -55,20 +56,23 @@ const ClientsPage = () => {
 
   return (
     isLoggedIn && (
-      <div className="container mx-auto p-4">
-        <h1 className="text-4xl font-bold mb-8">Clients</h1>
-        <div className="mb-4">
-          <input
-            type="text"
-            placeholder="Search clients..."
-            className="border p-2 rounded"
-            value={searchTerm}
-            onChange={handleSearch}
-          />
+      <div className="h-screen bg-slate-50">
+        <Nav />
+        <div className="container mx-auto p-4">
+          <h1 className="text-4xl font-bold mb-8">Clients</h1>
+          <div className="mb-4">
+            <input
+              type="text"
+              placeholder="Search clients..."
+              className="border p-2 rounded"
+              value={searchTerm}
+              onChange={handleSearch}
+            />
+          </div>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {renderClients}
+          </ul>
         </div>
-        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {renderClients}
-        </ul>
       </div>
     )
   );
