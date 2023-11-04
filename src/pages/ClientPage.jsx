@@ -35,7 +35,7 @@ const ClientsPage = () => {
 
   // Render client list
   const renderClients = filteredClients.map((client) => (
-    <li key={client._id} className="bg-blue-500 text-white p-4 rounded shadow">
+    <li key={client._id} className="bg-slate-500 text-white p-4 rounded shadow">
       <Link to={`/client/${client._id}`}>{client.name}</Link>
     </li>
   ));

@@ -18,15 +18,15 @@ const HomePage = () => {
             {isLoggedIn ? (
               <>
                 <div className="card-actions">
-                  <Link to="/generate"><button className="btn btn-primary">generate invoice</button></Link>
+                  <Link to="/generate"><button className="btn btn-neutral">Generate invoice</button></Link>
                 </div>
                 <div className="card-actions">
-                  <Link to="/invoices"><button className="btn btn-primary">invoices</button></Link>
+                  <Link to="/clients"><button className="btn btn-neutral">Clients</button></Link>
                 </div>
               </>
             ): (
             <div>
-                <Link to="/login"><button className="btn btn-primary">login</button></Link>
+                <Link to="/login"><button className="btn btn-neutral">login</button></Link>
             </div>)}
         </div>
       </div>

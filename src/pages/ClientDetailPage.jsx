@@ -63,7 +63,7 @@ const ClientDetailPage = () => {
             <p>Invoices:</p>
             <ul className="bg-gray-100 p-4 rounded-md space-y-2">
               {invoiceNum.map((invoiceNumber) => (
-                <li key={invoiceNumber._id} className="bg-white p-2 rounded-md">
+                <li key={invoiceNumber._id} className="bg-slate-200 p-2 rounded-md">
                   <p>Facture N°: <strong>{invoiceNumber.invoiceNumber}</strong></p>
                 </li>
               ))}
