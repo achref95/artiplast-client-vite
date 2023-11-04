@@ -108,7 +108,7 @@ const clientDetail = async (clientId) => {
     };
     const response = await api.get(`/client/${clientId}`, config)
     console.log(response)
-    return response.data.client
+    return response.data
   } catch (error) {
     console.log(error)
   }
