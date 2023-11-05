@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import productMethods from "../services/product.service";
@@ -13,6 +13,7 @@ const InvoiceDetailPage = () => {
     const fetchInvoiceDetails = async () => {
       try {
         const data = await productMethods.getInvoiceDetail(invoiceId);
+        console.log(data.invoice)
         setInvoiceDetail(data.invoice);
       } catch (error) {
         console.error("Error fetching invoice details:", error);
@@ -37,28 +38,6 @@ const InvoiceDetailPage = () => {
     );
   }
 
-  const renderInvoiceItems = () => {
-    return invoiceDetail.products.map((productId, index) => {
-      const product = {
-        _id: productId,
-        price: invoiceDetail.price[index],
-        quantity: invoiceDetail.quantity[index],
-        discount: invoiceDetail.discount[index] || 0,
-        tva: invoiceDetail.tva[index] || 0,
-      };
-
-      return (
-        <tr key={index}>
-          <td>{product._id}</td>
-          <td>{product.price}</td>
-          <td>{product.quantity}</td>
-          <td>{product.discount}</td>
-          <td>{`${product.tva}%`}</td>
-        </tr>
-      );
-    });
-  };
-
   return (
     isLoggedIn && (
       <div className="min-h-screen bg-slate-50">
@@ -75,7 +54,19 @@ const InvoiceDetailPage = () => {
                 <th>TVA</th>
               </tr>
             </thead>
-            <tbody>{renderInvoiceItems()}</tbody>
+            <tbody>
+            {invoiceDetail.products.map((product, index) => {
+              return (
+                <tr key={index}>
+                  <td>{product.product}</td>
+                  <td>{invoiceDetail.price[index]}</td>
+                  <td>{invoiceDetail.quantity[index]}</td>
+                  <td>{invoiceDetail.discount[index] || 0}</td>
+                  <td>{`${invoiceDetail.tva[index] || 0}%`}</td>
+                </tr>
+              );
+            })}
+            </tbody>
           </table>
         </div>
       </div>
