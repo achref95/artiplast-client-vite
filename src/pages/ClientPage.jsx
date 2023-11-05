@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Nav from "../components/Nav";
 import { AuthContext } from "../context/auth.context";
 import { Link } from "react-router-dom";
@@ -6,7 +6,6 @@ import productMethods from "../services/product.service";
 
 const ClientsPage = () => {
   const { isLoggedIn, isLoading, expire } = useContext(AuthContext);
-
   const [clients, setClients] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -33,16 +32,10 @@ const ClientsPage = () => {
     client.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Render client list
-  const renderClients = filteredClients.map((client) => (
-    <li key={client._id} className="bg-slate-500 text-white p-4 rounded shadow">
-      <Link to={`/client/${client._id}`}>{client.name}</Link>
-    </li>
-  ));
-
   if (expire) {
     return <div>Please <Link to="/login"><strong>login</strong></Link> again</div>;
   }
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -51,7 +44,7 @@ const ClientsPage = () => {
         <span className="loading loading-ring loading-md"></span>
         <span className="loading loading-ring loading-lg"></span>
       </div>
-    )
+    );
   }
 
   return (
@@ -69,9 +62,22 @@ const ClientsPage = () => {
               onChange={handleSearch}
             />
           </div>
-          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {renderClients}
-          </ul>
+          {filteredClients.length === 0 ? (
+            <div className="flex items-center justify-center h-screen">
+              <span className="loading loading-ring loading-xs"></span>
+              <span className="loading loading-ring loading-sm"></span>
+              <span className="loading loading-ring loading-md"></span>
+              <span className="loading loading-ring loading-lg"></span>
+            </div>
+          ) : (
+            <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {filteredClients.map((client) => (
+                <li key={client._id} className="bg-slate-500 text-white p-4 rounded shadow">
+                  <Link to={`/client/${client._id}`}>{client.name}</Link>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     )
