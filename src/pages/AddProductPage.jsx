@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/auth.context";
 import { Link } from "react-router-dom";
+import Nav from "../components/Nav";
 import productMethods from "../services/product.service";
 
 const AddProductPage = () => {
@@ -51,26 +52,30 @@ const AddProductPage = () => {
 
     return (
         isLoggedIn && (
-            <div className="container mx-auto p-4">
-                <h1 className="text-2xl font-bold mb-4">Add a New Product</h1>
-                <form onSubmit={handleProductSubmit} className="flex flex-col max-w-xs mx-auto space-y-4">
-                    <div>
-                        <label htmlFor="product" className="text-sm font-semibold text-gray-600 mb-1">Product Name:</label>
-                        <input
-                            type="text"
-                            id="product"
-                            value={product}
-                            onChange={(e) => setProduct(e.target.value)}
-                            className="border border-gray-300 p-2 rounded focus:outline-none focus:ring focus:border-blue-400"
-                        />
-                    </div>
-                    <button type="submit" className="bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition duration-300">
-                        Add Product
-                    </button>
-                </form>
-                {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
-                {successMessage && <p className="text-green-500 mt-2">{successMessage}</p>}
+            <div className="h-screen bg-slate-50">
+                <Nav />
+                <div className="container mx-auto p-4">
+                    <h1 className="text-2xl font-bold mb-4">Add a New Product</h1>
+                    <form onSubmit={handleProductSubmit} className="flex flex-col max-w-xs mx-auto space-y-4">
+                        <div>
+                            <label htmlFor="product" className="text-sm font-semibold text-gray-600 mb-1">Product Name:</label>
+                            <input
+                                type="text"
+                                id="product"
+                                value={product}
+                                onChange={(e) => setProduct(e.target.value)}
+                                className="input input-bordered w-full max-w-xs"
+                            />
+                        </div>
+                        <button type="submit" className="btn btn-wide btn-neutral">
+                            Add Product
+                        </button>
+                    </form>
+                    {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
+                    {successMessage && <p className="text-green-500 mt-2">{successMessage}</p>}
+                </div>
             </div>
+
         )
     );
 };
