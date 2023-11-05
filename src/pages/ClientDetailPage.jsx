@@ -64,7 +64,7 @@ const ClientDetailPage = () => {
             <ul className="bg-gray-100 p-4 rounded-md space-y-2">
               {invoiceNum.map((invoiceNumber) => (
                 <li key={invoiceNumber._id} className="bg-slate-200 p-2 rounded-md">
-                  <Link to={`/client/${client._id}/${invoiceNumber._id}`}><p>Facture N°: <strong>{invoiceNumber.invoiceNumber}</strong></p></Link>
+                  <Link to={`/client/${client._id}/${invoiceNumber._id}`} state={{ client }}><p>Facture N°: <strong>{invoiceNumber.invoiceNumber}</strong></p></Link>
                 </li>
               ))}
             </ul>

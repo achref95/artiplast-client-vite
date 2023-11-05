@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation  } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import productMethods from "../services/product.service";
 import Nav from "../components/Nav";
@@ -7,8 +7,10 @@ import Nav from "../components/Nav";
 const InvoiceDetailPage = () => {
   const { isLoggedIn, isLoading, expire } = useContext(AuthContext);
   const { invoiceId } = useParams();
+  const location = useLocation();
+  const { client } = location.state;
   const [invoiceDetail, setInvoiceDetail] = useState(null);
-
+  
   useEffect(() => {
     const fetchInvoiceDetails = async () => {
       try {
@@ -43,7 +45,7 @@ const InvoiceDetailPage = () => {
       <div className="min-h-screen bg-slate-50">
         <Nav />
         <div className="text-center bg-slate-50">
-          <h2 className="mb-8">Invoice Items:</h2>
+          <h2 className="mb-8">{client.name}'s Invoice N° {invoiceDetail.invoiceNumber} Items:</h2>
           <table className="w-full mx-auto text-left ml-4">
             <thead>
               <tr>
