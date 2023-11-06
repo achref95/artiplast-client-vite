@@ -20,7 +20,6 @@ const AddClientPage = () => {
             }
 
             const response = await productMethods.createClient(client);
-            console.log(response);
             setSuccessMessage(response.message);
             setClient({ name: "", taxNumber: "" });
 

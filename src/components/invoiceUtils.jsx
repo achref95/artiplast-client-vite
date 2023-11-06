@@ -12,7 +12,6 @@ export const calculateTotalWithTVA = (invoiceItems, timbre) => {
   // added timbre here
   const totalWithTVA = totalWithoutTVA + parseFloat(tvaAmount.toFixed(2)) + timbre;
   const roundedTotal = parseFloat(totalWithTVA.toFixed(2)); // Round to 2 decimal places
-  console.log(totalWithoutTVA, tvaAmount, timbre, roundedTotal);
   return roundedTotal;
 };
 

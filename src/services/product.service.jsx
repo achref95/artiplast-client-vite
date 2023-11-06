@@ -13,7 +13,6 @@ const generate = async ({ name, products, price, quantity, discount, timbre, tva
         },
       };
       const response = await api.post(`/invoice/generate`, { name, products, price, quantity, discount, timbre, tva, observation }, config);
-      console.log(response.data)
       return response.data;
     } catch (error) {
       throw error;
@@ -74,7 +73,6 @@ const getAllClients = async () => {
       },
     };
     const response = await api.get(`/client/all`, config)
-    console.log(response.data.clients)
     return response.data.clients
   } catch (error) {
     console.log(error)
@@ -90,7 +88,6 @@ const getClients = async () => {
       },
     };
     const response = await api.get(`/client/get`, config)
-    console.log(response.data)
     return response.data
   } catch (error) {
     console.log(error)
@@ -106,7 +103,6 @@ const createClient = async ({name, taxNumber}) => {
       },
     };
     const response = await api.post(`/client/add`, { name, taxNumber }, config);
-    console.log(response.data)
     return response.data;
   } catch (error) {
     throw error;
@@ -122,7 +118,6 @@ const clientDetail = async (clientId) => {
       },
     };
     const response = await api.get(`/client/${clientId}`, config)
-    console.log(response)
     return response.data
   } catch (error) {
     console.log(error)
@@ -138,7 +133,6 @@ const createProduct = async ({ product }) => {
       },
     };
     const response = await api.post(`/product`, { product }, config);
-    console.log(response)
     return response.data;
   } catch (error) {
     throw error;
@@ -154,7 +148,6 @@ const getProduct = async () => {
       },
     };
     const response = await api.get(`/product/get`, config);
-    console.log(response.data)
     return response.data.products;
   } catch (error) {
     console.log(error)

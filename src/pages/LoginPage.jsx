@@ -56,7 +56,7 @@ const LoginPage = () => {
           <span className="loading loading-ring loading-md"></span>
           <span className="loading loading-ring loading-lg"></span>
         </div>
-        <div className="text-center">
+        <div className="text-center mt-8">
           <p className="text-lg font-bold mb-4">Hang Tight!</p>
           <p>Our server is firing up its engines. Due to the cosmic distances in cyberspace, this may take up to a minute. Prepare for launch!</p>
         </div>

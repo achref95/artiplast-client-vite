@@ -15,7 +15,6 @@ const InvoiceDetailPage = () => {
     const fetchInvoiceDetails = async () => {
       try {
         const data = await productMethods.getInvoiceDetail(invoiceId);
-        console.log(data.invoice)
         setInvoiceDetail(data.invoice);
       } catch (error) {
         console.error("Error fetching invoice details:", error);

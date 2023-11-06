@@ -14,7 +14,6 @@ const ClientDetailPage = () => {
     const fetchClientDetails = async () => {
       try {
         const data = await productMethods.clientDetail(clientId);
-        console.log(data.invoiceNumbers)
         setClient(data.client);
         setInvoiceNum(data.invoiceNumbers)
       } catch (error) {

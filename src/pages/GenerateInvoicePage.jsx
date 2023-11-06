@@ -64,8 +64,7 @@ const GenerateInvoicePage = () => {
 
   const handleAddToInvoice = () => {
     const newItem = { client, product, price, quantity, discount, tva };
-    console.log(newItem)
-
+    
     setInvoiceItems([...invoiceItems, newItem]);
     setProduct("");
     setPrice("");

@@ -20,8 +20,6 @@ const AddProductPage = () => {
             }
     
             const response = await productMethods.createProduct({ product });
-            console.log(response) 
-            console.log(response.message)
             setSuccessMessage(response.message)
     
         } catch (error) {
