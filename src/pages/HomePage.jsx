@@ -23,6 +23,12 @@ const HomePage = () => {
                 <div className="card-actions">
                   <Link to="/clients"><button className="btn btn-neutral">Clients</button></Link>
                 </div>
+                <div className="card-actions">
+                  <Link to="/add-client"><button className="btn btn-neutral">Add Client</button></Link>
+                </div>
+                <div className="card-actions">
+                  <Link to="/add-product"><button className="btn btn-neutral">Add Product</button></Link>
+                </div>
               </>
             ): (
             <div>
