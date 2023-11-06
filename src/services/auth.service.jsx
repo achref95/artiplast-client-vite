@@ -20,7 +20,6 @@ const signup = async ({ username, password }) => {
 const login = async ({ username, password }) => {
   try {
     const response = await api.post("/auth/login", { username, password });
-    console.log(response)
     return {responseData: response.data, responseStatus: response.status}
   } catch (err) {
     console.error(err);
@@ -47,7 +46,6 @@ const getCurrentUser = async () => {
     const response = await api.get("/user", {
       headers: { Authorization: `Bearer ${storedToken}` },
     });
-    console.log("current user:", response.data);
     return response.data;
   } catch (err) {
     console.error(err);
