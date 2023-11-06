@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
+import { ToWords } from "to-words";
 import Nav from "../components/Nav";
 import { calculateTotalWithTVA,
          calculateTotalWithoutTVA, 
@@ -19,12 +20,14 @@ const GenerateInvoicePage = () => {
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [discount, setDiscount] = useState("");
-  const [timbre, setTimbre] = useState(1000);
+  // Timbre is Stamp tax, you can edit it depending on your needs
+  const [timbre, setTimbre] = useState(0);
   const [tva, setTVA] = useState(19);
   const [observation, setObservation] = useState("");
   const [withoutTVA, setWithoutTVA] = useState(0);
   const [invoiceTVA, setInvoiceTVA] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [totalAmountInLetters, setTotalAmountInLetters] = useState("");
   const [invoiceNumber, setInvoiceNumber] = useState("");
   const [invoiceItems, setInvoiceItems] = useState([]);
   const [bill, setBill] = useState(false);
@@ -43,7 +46,7 @@ const GenerateInvoicePage = () => {
     setDiscount(discountValue);
   };
 
-  // need some work here
+  // If the stamp tax amount is variable, you can create an new input to handle that
   const handleTimbre = (e) => {
     setTimbre(e.target.value);
   }
@@ -68,7 +71,6 @@ const GenerateInvoicePage = () => {
     setPrice("");
     setQuantity("");
     setDiscount("");
-    setTVA(19);
     setBill(false);
   };
 
@@ -90,11 +92,33 @@ const GenerateInvoicePage = () => {
       const ObservationValue = observation
 
       const totalAmountWithTVA = calculateTotalWithTVA(invoiceItems, timbre);
-      console.log("total with TVA:", totalAmountWithTVA);
+      // console.log("total with TVA:", totalAmountWithTVA);
       const a = calculateTotalWithoutTVA(invoiceItems);
-      console.log("total without TVA:", a);
+      // console.log("total without TVA:", a);
       const b = tvaValue(invoiceItems);
-      console.log("tva value:", b);
+      // console.log("tva value:", b);
+      const toWords = new ToWords({
+        localeCode: 'en-US',
+        converterOptions: {
+          currency: true,
+          ignoreDecimal: false,
+          ignoreZeroCurrency: false,
+          doNotAddOnly: true,
+          currencyOptions: {
+            name: 'Dollar',
+            plural: 'Dollars',
+            symbol: '',
+            fractionalUnit: {
+              name: 'cent',
+              plural: 'cents',
+              symbol: '',
+            },
+          },
+        },
+      });
+
+      const totalAmountWords = toWords.convert(totalAmountWithTVA, { currency: true });
+      setTotalAmountInLetters(totalAmountWords);
 
 
       const response = await productMethods.generate({
@@ -113,7 +137,6 @@ const GenerateInvoicePage = () => {
       setTotalAmount(totalAmountWithTVA);
       setInvoiceNumber(response.invoiceNumber);
       setBill(true);
-      // setObservation("");
 
     } catch (error) {
       console.error(error);
@@ -259,7 +282,8 @@ const GenerateInvoicePage = () => {
                     tva={tva} 
                     tax={tax}
                     observation={observation} 
-                    totalAmount={totalAmount} 
+                    totalAmount={totalAmount}
+                    totalAmountInLetters={totalAmountInLetters} 
                     withoutTVA={withoutTVA} 
                     invoiceTVA={invoiceTVA} 
                     />}

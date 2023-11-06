@@ -9,7 +9,8 @@ const BillPage = ({ client,
                     observation,
                     tva /*Taux%*/, 
                     tax /*Matricule fiscal*/, 
-                    totalAmount/*Total TTC*/, 
+                    totalAmount/*Total TTC*/,
+                    totalAmountInLetters, 
                     withoutTVA /*Base/Total HT*/, 
                     invoiceTVA /*Montant/TVA*/}) => {
   useEffect(() => {
@@ -31,28 +32,28 @@ const BillPage = ({ client,
       doc.setTextColor(51, 159, 255);
       y += 10;
       doc.setFontSize(14);
-      doc.text('Sté IDEAL ARTIPLAST', 55, y);
+      doc.text('Company Name', 55, y);
 
       // Company details
       doc.setTextColor(0, 0, 0);
       doc.setFontSize(7);
       y += 4;
-      doc.text('vente en Gros des Articles el Plastique', 55, y);
+      doc.text('Whatever this company sells', 55, y);
       y += 4;
-      doc.text("Av. de l'Environnement - Medjez El Bab", 55, y);
+      doc.text("Company Adress - Wukanda", 55, y);
       y += 4;
-      doc.text("Tél: 78 560 234 - GSM 98 779 826", 55, y);
+      doc.text("Phones: 12 345 678 - GSM 12 345 678", 55, y);
       y += 4;
-      doc.text("Fax: 78 560 687", 55, y);
+      doc.text("Fax: 12 345 678", 55, y);
       y += 4;
-      doc.text("R.C: B-051432009 - TVA: 000/MA/1079207/Z", 55, y);
+      doc.text("R.C: B-123456789 - TVA: 123/MA/456789/BB", 55, y);
 
       // Invoice number
       doc.setTextColor(51, 159, 255);
       y += 16;
       doc.setFontSize(14);
       doc.setFont('times', 'bold');
-      doc.text(`Facture N° ${invoiceNumber}`, 50, y);
+      doc.text(`Invoice N° ${invoiceNumber}`, 50, y);
 
       ////////////////////////////////////
       // Client details
@@ -76,7 +77,7 @@ const BillPage = ({ client,
       const currentDate = new Date();
       const formattedDate = `${String(currentDate.getDate()).padStart(2, '0')}/${String(currentDate.getMonth() + 1).padStart(2, '0')}/${currentDate.getFullYear()}`;
 
-      doc.text(`Medjez le ${formattedDate}`, 133, roundedRectY + 20);
+      doc.text(`Wukanda ${formattedDate}`, 133, roundedRectY + 20);
 
       //////////////////////////////////////
 
@@ -95,9 +96,9 @@ const BillPage = ({ client,
           head: [['Product', 'Price', 'Quantity', 'Total']],
           body: itemsToRender.map((item) => [
             item.product,
-            `${item.price} TND`,
+            `${item.price} USD`,
             item.quantity,
-            `${item.price * item.quantity} TND`,
+            `${item.price * item.quantity} USD`,
           ]),
           theme: 'striped',
           //adjust
@@ -123,7 +124,7 @@ const BillPage = ({ client,
       doc.line(lineStartX, lineY, lineEndX, lineY);
 
         // Second line words
-      const words1 = ['Code', 'Base', 'Taux', 'Montant'];
+      const words1 = ['Code', 'Base', 'Rate', 'Amount'];
       const word1X = 20; 
       const words1Spacing = 18; 
       doc.setTextColor(51, 159, 255);
@@ -133,7 +134,7 @@ const BillPage = ({ client,
         doc.text(word, x, lineY + 7);
       });
 
-      const words2 = ['Total HT', 'TVA', 'Timbre', 'Total TTC'];
+      const words2 = ['Total w/ tax', 'TVA', 'Stamp Tax', 'Total w tax'];
       const word2X = 110;
       const words2Spacing = 20;
       doc.setTextColor(0); 
@@ -157,7 +158,7 @@ const BillPage = ({ client,
       doc.line(line2Part2StartX, lineY2, line2Part2EndX, lineY2);
 
       // Total TTC
-      const totalAmountText = `${totalAmount} TND`;
+      const totalAmountText = `${totalAmount} USD`;
 
 
       // line 2
@@ -241,14 +242,33 @@ const BillPage = ({ client,
       // TEXT
       const textStartX = 90
       doc.setTextColor(192,192,192)
-      doc.text('Arretée la présente facture à la somme de :', textStartX, lineY3 + 13)
+      doc.text('invoice at the sum of :', textStartX, lineY3 + 13)
+
+      // Numbers to letters
+      // Maximum width for the text
+      doc.setTextColor(105,105,105)
+
+      const maxWidth = 158 - textStartX;
+      const textWidth = doc.getTextWidth(totalAmountInLetters);
+      
+      if (textWidth <= maxWidth) {
+        // If the text fits within the width, draw it on a single line
+        doc.text(totalAmountInLetters, textStartX, lineY + 42);
+      } else {
+        // If the text exceeds the width, split it into multiple lines and adjust y-coordinate
+        const lines = doc.splitTextToSize(totalAmountInLetters, maxWidth);
+        lines.forEach((line, index) => {
+          doc.text(line, textStartX, lineY + 42 + index * 5); // Adjust the y-coordinate based on your font size and line height
+        });
+      }
+
 
       // Signature
       const signStartX = 165;
       doc.setTextColor(51, 159, 255);
       doc.setFont("times", "bold");
       doc.setFontSize(9);
-      doc.text('signature et cachet', signStartX, lineY3 + 13);
+      doc.text('signature and stamp', signStartX, lineY3 + 13);
 
 
 
@@ -264,7 +284,7 @@ const BillPage = ({ client,
       // Spacing between "TOTAL" and totalAmount
       const totalAmountX = totalTextX + 35;
       doc.setTextColor(0); 
-      doc.text(`${totalAmount} TND`, totalAmountX, totalTextY);
+      doc.text(`${totalAmount} USD`, totalAmountX, totalTextY);
 
       // Fifth line
       const line5StartX = 15; 
@@ -312,11 +332,11 @@ const BillPage = ({ client,
       // Footer
         // Add the footer text
         const footerText = [
-          'Sté IDEAL ARTIPLAST',
-          'Vente en Gros des Articles en Plastique - Av. de l\'Environnement',
-          'Medjez El Bab - Tel 78 560 234 - GSM 98 779 826',
+          'Company Name',
+          'Company Adress - Wukanda',
+          'Medjez El Bab - Tel 12 456 798 - GSM 12 345 678',
           'FAX: 78 560 687',
-          'R.C: B-051432009 - TVA: 000/ma/1079207/Z'
+          'R.C: B-123456789 - TVA: 123/ma/456789/BB'
         ];
         const footerFontSize = 5;
         const footerLineHeight = 0.7; // 0.7mm spacing between lines

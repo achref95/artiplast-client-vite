@@ -10,7 +10,6 @@ import BillPage from "./pages/BillPage";
 import AddProductPage from "./pages/AddProductPage";
 import AddClientPage from "./pages/AddClientPage";
 import ClientDetailPage from "./pages/ClientDetailPage";
-import NumberToWordsComponent from "./pages/NumberToWordsComponent";
 import InvoiceDetailPage from "./pages/InvoiceDetailPage";
 
 function App() {
@@ -28,7 +27,6 @@ function App() {
         <Route path="/add-client" element={<AddClientPage />} />
         <Route path="/client/:clientId" element={<ClientDetailPage />} />
         <Route path="/client/:clientId/:invoiceId" element={<InvoiceDetailPage />} />
-        <Route path="/test" element={<NumberToWordsComponent />} />
         <Route path="/*" element={<NotFoundPage />} />
       </Routes>
     </>
