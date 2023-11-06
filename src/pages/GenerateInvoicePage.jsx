@@ -170,10 +170,15 @@ const GenerateInvoicePage = () => {
             <ClientSearchBar setClient={setClient} setTax={setTax} />
           </div>
 
-          {/* Second Line */}
+          {/* Add Product Line */}
           <div className="flex items-center space-x-2">
             <h1>Add Product</h1>
             <ProductSearchBar setProduct={setProduct} />
+          </div>
+
+          {/* Inputs Line */}
+          <div className="flex items-center space-x-2">
+            <h1>Add Details</h1>
             <input
               type="number"
               placeholder="Quantity"
@@ -199,6 +204,7 @@ const GenerateInvoicePage = () => {
               required
             />
           </div>
+
 
           {/* Third Line */}
           <div className="flex items-center space-x-2">
@@ -226,6 +232,7 @@ const GenerateInvoicePage = () => {
             type="button"
             onClick={handleAddToInvoice}
             className="btn btn-neutral"
+            disabled={!client || !product || !price || !quantity || !tva}
           >
             Add to Invoice
           </button>
