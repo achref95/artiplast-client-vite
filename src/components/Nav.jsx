@@ -1,11 +1,28 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/auth.context";
 
 const Nav = () => {
+  const { isLoggedIn, logOutUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   return (
-    <Link to="/" className="navbar bg-neutral text-neutral-content mb-4">
-      <div className="btn btn-ghost normal-case text-xl">ARTIPLAST</div>
-    </Link>
+    <div className="flex items-center justify-between bg-neutral text-neutral-content p-4">
+      <Link to="/" className="btn btn-ghost normal-case text-xl">
+        ARTIPLAST
+      </Link>
+      {isLoggedIn && (
+        <button
+          onClick={() => {
+            logOutUser();
+            navigate("/");
+          }}
+          className="btn btn-error"
+        >
+          Log out
+        </button>
+      )}
+    </div>
   );
 };
 
