@@ -7,7 +7,7 @@ const Nav = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex items-center justify-between bg-neutral text-neutral-content p-4">
+    <div className="flex items-center justify-between bg-neutral text-neutral-content p-4 mb-4">
       <Link to="/" className="btn btn-ghost normal-case text-xl">
         ARTIPLAST
       </Link>
