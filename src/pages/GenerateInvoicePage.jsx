@@ -162,7 +162,7 @@ const GenerateInvoicePage = () => {
     isLoggedIn && (
       <div className="h-screen bg-slate-50">
         <Nav />
-        <form className="space-y-2 ml-4">
+        <form className="space-y-2 ml-4 mb-4">
           {/* First Line */}
           <div className="flex items-center space-x-2">
             <h1>Add Client</h1>
