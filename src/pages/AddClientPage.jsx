@@ -34,7 +34,7 @@ const AddClientPage = () => {
         const timer = setTimeout(() => {
             setErrorMessage("");
             setSuccessMessage("");
-        }, 5000); // Clear messages after 5 seconds
+        }, 5000);
 
         return () => {
             clearTimeout(timer); // Clear the timer if the component unmounts
