@@ -24,13 +24,15 @@ const SignUp = () => {
     e.preventDefault();
     try {
         const response = await authMethods.signup(user)
-        console.log(response)
-        setSignupButton(true)
         if (response) {
+          setSignupButton(false)
           navigate("/login")
+        } else {
+          setSignupButton(true)
         }
     } catch (err) {
       console.log(err);
+      setSignupButton(false)
     }
   };
 
