@@ -10,9 +10,10 @@ const signup = async ({ username, password }) => {
       username,
       password,
     });
-    return response.data;
+    return response;
   } catch (err) {
     console.error(err);
+    return err.response
   }
 };
 

@@ -10,6 +10,7 @@ const SignUp = () => {
     password: "",
   });
   const [signupButton, setSignupButton] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const { isLoggedIn, isLoading } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -22,25 +23,42 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSignupButton(true)
-
+    setSignupButton(true);
+  
     try {
-        const response = await authMethods.signup(user)
-        if (response) {
-          setSignupButton(false)
-          navigate("/login")
-        } else {
-          setSignupButton(true)
-        }
+      const response = await authMethods.signup(user);
+      const message = response.data.message;
+  
+      setErrorMessage(message);
+  
+      if (response.status === 201) {
+        setSignupButton(false);
+        navigate("/login");
+      } else {
+        // Handle non-201 status codes if needed
+        setSignupButton(false);
+      }
     } catch (err) {
-      console.log(err);
-      setSignupButton(false)
+      console.error("Error during signup:", err);
+      setSignupButton(false);
     }
   };
+  
 
   if (isLoading) {
     return (
-      <span className="loading loading-spinner text-error">Loading...</span>
+      <div className="flex flex-col items-center justify-center h-screen">
+        <div className="mb-8">
+          <span className="loading loading-ring loading-xs"></span>
+          <span className="loading loading-ring loading-sm"></span>
+          <span className="loading loading-ring loading-md"></span>
+          <span className="loading loading-ring loading-lg"></span>
+        </div>
+        <div className="text-center mt-8">
+          <p className="text-lg font-bold mb-4">Hang Tight!</p>
+          <p>Our server is firing up its engines. Due to the cosmic distances in cyberspace, this may take up to a minute. Prepare for launch!</p>
+        </div>
+      </div>
     );
   }
 
@@ -87,7 +105,7 @@ const SignUp = () => {
                 />
               </div>
 
-
+              {errorMessage && <div className="text-error mt-4">{errorMessage}</div>}
               <div className="form-control mt-6">
               {signupButton ? (
                   <button className="btn btn-primary" disabled>
