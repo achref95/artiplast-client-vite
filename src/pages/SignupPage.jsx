@@ -23,9 +23,10 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const result = await authMethods.signup(user)
+        const response = await authMethods.signup(user)
+        console.log(response)
         setSignupButton(true)
-        if (result) {
+        if (response) {
           navigate("/login")
         }
     } catch (err) {
