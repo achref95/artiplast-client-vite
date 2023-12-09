@@ -22,6 +22,8 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSignupButton(true)
+
     try {
         const response = await authMethods.signup(user)
         if (response) {
