@@ -4,7 +4,18 @@ import { AuthContext } from "../context/auth.context"
 
 
 const HomePage = () => {
-  const { isLoggedIn } = useContext(AuthContext)
+  const { isLoggedIn, isLoading } = useContext(AuthContext)
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <span className="loading loading-ring loading-xs"></span>
+        <span className="loading loading-ring loading-sm"></span>
+        <span className="loading loading-ring loading-md"></span>
+        <span className="loading loading-ring loading-lg"></span>
+      </div>
+    );
+  }
 
   return (
     <div className="flex justify-center items-center h-screen bg-slate-50">
