@@ -79,6 +79,9 @@ const LoginPage = () => {
           </Link>
           <div className="card-body">
             <h1 className="text-3xl">Login</h1>
+            <p className="text-sm text-gray-500 mb-4">
+              This is a demo app. Due to the server being hosted on a free service, it can take up to 30 seconds for the server to boot up.
+            </p>
             <form onSubmit={handleSubmit} className="flex flex-col space-y-2">
               <div className="form-control">
                 <label className="label">

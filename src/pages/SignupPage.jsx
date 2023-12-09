@@ -9,6 +9,7 @@ const SignUp = () => {
     username: "",
     password: "",
   });
+  const [signupButton, setSignupButton] = useState(false);
   const { isLoggedIn, isLoading } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -22,8 +23,11 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        await authMethods.signup(user)
-        navigate("/login")
+        const result = await authMethods.signup(user)
+        setSignupButton(true)
+        if (result) {
+          navigate("/login")
+        }
     } catch (err) {
       console.log(err);
     }
@@ -39,7 +43,6 @@ const SignUp = () => {
     return (
       <div data-theme="cmyk" className="hero min-h-screen">
         <div className="card w-full max-w-sm">
-          {/* Up for a change */}
           <Link to="/">
             <div className="flex flex-row justify-center gap-x-4 items-center mb-2">
               <h1 className="text-6xl font-bold">Artiplast</h1>
@@ -47,6 +50,9 @@ const SignUp = () => {
           </Link>
           <div className="card-body">
             <h1 className="text-3xl">Sign up</h1>
+            <p className="text-sm text-gray-500 mb-4">
+              This is a demo app. Due to the server being hosted on a free service, it can take up to 30 seconds for the server to boot up.
+            </p>
 
             <form onSubmit={handleSubmit} className="space-y-2">
               <div className="form-control">
@@ -78,9 +84,16 @@ const SignUp = () => {
 
 
               <div className="form-control mt-6">
-                <button className="btn btn-primary" type="submit">
-                  Sign up
-                </button>
+              {signupButton ? (
+                  <button className="btn btn-primary" disabled>
+                    <span className="loading loading-spinner"></span>
+                    Loading
+                  </button>
+                ) : (
+                  <button className="btn btn-primary" type="submit">
+                    Sign Up
+                  </button>
+                )}
                 <div className="divider my-8">Already sign up?</div>
                 <Link to="/login">
                   <button className="btn btn-outline w-full">Log in</button>

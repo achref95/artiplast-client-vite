@@ -32,7 +32,8 @@ const HomePage = () => {
                 </div>
               </>
             ): (
-            <div>
+            <div className="flex flex-col">
+                <Link to="/signup"><button className="btn btn-neutral mb-2">Sign Up</button></Link>
                 <Link to="/login"><button className="btn btn-neutral">login</button></Link>
             </div>)}
         </div>
