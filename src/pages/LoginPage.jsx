@@ -32,7 +32,7 @@ const LoginPage = () => {
 
     try {
       const response = await authMethods.login(user);
-      console.log(response)
+      
       if (!response?.responseStatus) {
         setError(response?.response?.data.message);
         setIsLoadingLogin(false);

@@ -12,7 +12,6 @@ const signup = async ({ username, password }) => {
     });
     return response;
   } catch (err) {
-    console.error(err);
     return err.response
   }
 };
