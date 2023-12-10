@@ -3,7 +3,7 @@
 <br>
 
 ## Description
-IMPORTANT: Due the server being hosted on a free hosting provider, it can take up to one minute for it to bootup when signing up / loggin in.
+IMPORTANT: Due the server being hosted on a free hosting provider, it can take up to 30 seconds for it to bootup when signing up / loggin in.
 
 Welcome to ARTIPLAST invoice generator, the ultimate invoice generator designed to empower your business with effortless invoicing and unmatched customization! Tailored for businesses of all sizes, our cutting-edge solution redefines the way you create invoices, making the process seamless, stylish, and entirely personalized.
 
